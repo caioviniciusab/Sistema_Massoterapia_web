@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Agenda do Dia</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3 th:text="${#temporals.format(dataSelecionada, 'dd/MM/yyyy')}"></h3>
+
+    <h1>Agenda</h1>
+
+    <div th:if="${sucesso}" class="mensagem-sucesso">
+        <i class="bi bi-check-circle-fill"></i>
+        <span th:text="${sucesso}"></span>
+    </div>
+
+    <form th:action="@{/agenda}" method="get">
+
+        <label>Data</label>
+
+        <input
+                type="date"
+                name="data"
+                th:value="${dataSelecionada}">
+
+        <button type="submit">
+            Buscar
+        </button>
+
+    </form>
+
+    <div th:if="${agendamentos.isEmpty()}">
+        <p>Não há agendamentos para hoje.</p>
+    </div>
+
+    <div th:each="agendamento : ${agendamentos}" class="card-agendamento">
+
+        <h3>
+            <i class="bi bi-person-fill"></i>
+            <span th:text="${agendamento.cliente.nome}"></span>
+        </h3>
+
+        <p>
+            <i class="bi bi-flower1"></i>
+            <strong>Serviço:</strong>
+            <span th:text="${agendamento.servico.nomeServico}"></span>
+        </p>
+
+        <h2 class="horario"
+            th:text="${#temporals.format(agendamento.data,'HH:mm')}">
+        </h2>
+
+        <p>
+            <i class="bi bi-calendar-event"></i>
+            <strong>Data:</strong>
+            <span th:text="${#temporals.format(agendamento.data,'dd/MM/yyyy')}"></span>
+        </p>
+
+        <p>
+            <i class="bi bi-check-circle"></i>
+            <strong>Status:</strong>
+
+            <span th:text="${agendamento.status}"
+                  th:classappend="${agendamento.status == 'AGENDADO'} ? 'status-agendado' :
+                  (${agendamento.status == 'CONCLUIDO'} ? 'status-concluido' : 'status-cancelado')">
+            </span>
+
+        </p>
+
+        <div class="acoes" th:if="${agendamento.status == 'AGENDADO'}">
+
+            <a th:href="@{/editar/{id}(id=${agendamento.id})}"
+               class="btn-editar">
+
+                Editar
+
+            </a>
+
+            <form th:action="@{/concluir/{id}(id=${agendamento.id})}"
+                  method="post">
+
+                <button class="btn-confirmar" type="submit">
+                    Concluir
+                </button>
+
+            </form>
+
+            <form th:action="@{/cancelar/{id}(id=${agendamento.id})}"
+                  method="post"
+                  onsubmit="return confirmarCancelamento()">
+
+                <button class="btn-cancelar" type="submit">
+                    Cancelar
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <a href="/dashboard" class="btn-voltar">
+        Voltar ao Painel
+    </a>
+
+</div>
+
+<script>
+
+    function confirmarCancelamento() {
+        return confirm("Tem certeza que deseja cancelar este atendimento?");
+    }
+
+</script>
+
+</body>
+</html>

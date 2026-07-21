@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Agendamento</h1>
+
+    <div th:if="${sucesso}" class="mensagem-sucesso">
+        <i class="bi bi-check-circle-fill"></i>
+        <span th:text="${sucesso}"></span>
+    </div>
+
+    <div th:if="${erro}" class="mensagem-erro">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span th:text="${erro}"></span>
+    </div>
+
+    <form action="/salvar" method="post" class="form-agendamento">
+
+        <div class="campo">
+            <label>Nome</label>
+
+            <div class="input-icon">
+                <i class="bi bi-person-fill"></i>
+                <input type="text" name="nome" placeholder="Digite seu nome" required>
+            </div>
+        </div>
+
+        <div class="campo">
+            <label>Telefone</label>
+
+            <div class="input-icon">
+                <i class="bi bi-telephone-fill"></i>
+                <input type="text" name="telefone" placeholder="(00) 00000-0000" required>
+            </div>
+        </div>
+
+        <div class="campo">
+            <label>Tipo de Massagem</label>
+
+            <div class="input-icon">
+                <i class="bi bi-flower1"></i>
+
+                <select name="servico" required>
+                    <option value="" selected disabled>Selecione o tipo de massagem</option>
+                    <option>Massagem Facial</option>
+                    <option>Massagem Relaxante Completa</option>
+                    <option>Massagem Relaxante Com Vela</option>
+                    <option>Massagem Relaxante Com Pedras Quentes</option>
+                    <option>Massagem Relaxante Com Bambús</option>
+                    <option>Ventosaterapia</option>
+                    <option>Escalda Pés</option>
+                    <option>Drenagem Linfática Facial</option>
+                    <option>Drenagem Linfática Corporal</option>
+                    <option>Detox</option>
+                    <option>Manta Térmica</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="campo">
+            <label>Data</label>
+
+            <div class="input-icon">
+                <i class="bi bi-calendar-event"></i>
+                <input type="date" id="data" name="data" required>
+            </div>
+        </div>
+
+        <div class="campo">
+            <label>Horário</label>
+
+            <div class="input-icon">
+                <i class="bi bi-clock"></i>
+
+                <select id="horario" name="horario" required>
+                    <option value="" selected disabled>Selecione o horário</option>
+                    <option>08:00</option>
+                    <option>09:00</option>
+                    <option>10:00</option>
+                    <option>11:00</option>
+                    <option>13:00</option>
+                    <option>14:00</option>
+                    <option>15:00</option>
+                    <option>16:00</option>
+                    <option>17:00</option>
+                    <option>18:00</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn-confirmar" type="submit">
+            Confirmar
+        </button>
+
+        <a href="/" class="btn-voltar">
+            Voltar
+        </a>
+
+    </form>
+
+</div>
+
+<script>
+
+    const campoData = document.getElementById("data");
+    const selectHorario = document.getElementById("horario");
+
+    campoData.addEventListener("change", function () {
+
+        fetch("/horarios?data=" + campoData.value)
+            .then(response => response.json())
+            .then(horarios => {
+
+                selectHorario.innerHTML = "";
+
+                horarios.forEach(horario => {
+
+                    let option = document.createElement("option");
+
+                    option.value = horario;
+                    option.textContent = horario;
+
+                    selectHorario.appendChild(option);
+
+                });
+
+            });
+
+    });
+
+</script>
+
+</body>
+</html>

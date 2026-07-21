@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Área da Massoterapeuta</h1>
+
+    <div th:if="${erro}" class="mensagem-erro">
+
+        <i class="bi bi-exclamation-circle-fill"></i>
+
+        <span th:text="${erro}"></span>
+
+    </div>
+
+    <form action="/login" method="post">
+
+        <div class="campo">
+
+            <label>Usuário</label>
+
+            <div class="input-icon">
+
+                <i class="bi bi-person-fill"></i>
+
+                <input
+                        type="text"
+                        name="usuario"
+                        placeholder="Digite seu usuário"
+                        required>
+
+            </div>
+
+        </div>
+
+        <div class="campo">
+
+            <label>Senha</label>
+
+            <div class="input-icon">
+
+                <i class="bi bi-lock-fill"></i>
+
+                <input
+                        type="password"
+                        name="senha"
+                        placeholder="Digite sua senha"
+                        required>
+
+            </div>
+
+        </div>
+
+        <a href="/dashboard" class="btn-confirmar" type="submit">
+            <button>Entrar</button>
+        </a>
+
+
+        <a href="/" class="btn-voltar">
+            Voltar
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+</html>

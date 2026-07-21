@@ -1,0 +1,343 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #6DD5FA, #2980B9);
+}
+
+.container {
+    width: 600px;
+    background: white;
+    padding: 35px 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+    text-align: center;
+    font-size: 42px;
+    color: #1d2940;
+    margin-bottom: 12px;
+}
+
+.form-agendamento {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo {
+    margin-bottom: 22px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #1d2940;
+}
+
+.input-icon {
+    display: flex;
+    align-items: center;
+
+    background: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+
+    padding: 0 12px;
+}
+
+.input-icon i {
+    color: #2e93eb;
+    font-size: 20px;
+
+    margin-right: 12px;
+}
+
+.input-icon input,
+.input-icon select {
+    width: 100%;
+    height: 48px;
+
+    border: none;
+    outline: none;
+
+    font-size: 16px;
+}
+
+input,
+select {
+    width: 100%;
+    height: 48px;
+    padding: 0 15px;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, .25);
+}
+
+button {
+    width: 100%;
+    height: 58px;
+    margin-top: 15px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: #2e93eb;
+
+    color: white;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+button:hover {
+    background: #1f79c8;
+    transform: translateY(-2px);
+}
+
+.btn-voltar {
+    display: block;
+    width: 100%;
+    height: 58px;
+    line-height: 58px;
+
+    margin-top: 15px;
+
+    background: #2e93eb;
+
+    color: white;
+    text-decoration: none;
+    text-align: center;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    border-radius: 14px;
+
+    transition: .2s;
+}
+
+.btn-voltar:hover {
+    background: #1f79c8;
+    transform: translateY(-2px);
+}
+
+.mensagem-sucesso {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background: #d1fae5;
+    color: #065f46;
+
+    border-left: 5px solid #10b981;
+    border-radius: 10px;
+
+    padding: 14px;
+    margin: -10px 0 20px 0;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+
+    animation: aparecer 0.4s ease;
+}
+
+.mensagem-sucesso i {
+    color: #10b981;
+    font-size: 20px;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mensagem-erro{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    background:#fee2e2;
+    color:#991b1b;
+
+    border-left:5px solid #dc2626;
+
+    padding:14px;
+    margin-bottom:20px;
+
+    border-radius:10px;
+
+    font-weight:600;
+}
+
+.mensagem-erro i{
+    color:#dc2626;
+}
+
+.card-agendamento {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+    border-left: 6px solid #3498db;
+    text-align: left;
+    transition: .3s;
+}
+
+.card-agendamento:hover {
+    transform: translateY(-3px);
+}
+
+.card-agendamento h3 {
+    margin-top: 0;
+    color: #3498db;
+}
+
+.card-agendamento i {
+    color: #3498db;
+    margin-right: 8px;
+}
+
+.status-agendado {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-cancelado {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.status-concluido {
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+.btn-cancelar{
+
+    width: 100%;
+
+    background: #dc3545;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    margin-top: 15px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: .3s;
+}
+
+.btn-cancelar:hover{
+
+    background: #bb2d3b;
+
+}
+
+.mensagem-erro{
+
+    background: #fdecea;
+
+    color: #c62828;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+
+    font-weight: bold;
+
+    text-align: center;
+
+}
+
+.acoes{
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+}
+
+.acoes form{
+
+    flex: 1;
+
+}
+
+.status-agendado{
+
+    color: #28a745;
+
+    font-weight: bold;
+
+}
+
+.status-concluido{
+
+    color: #0d6efd;
+
+    font-weight: bold;
+
+}
+
+.status-cancelado{
+
+    color: #dc3545;
+
+    font-weight: bold;
+
+}
+
+.horario{
+
+    font-size: 32px;
+
+    color: #0d6efd;
+
+    margin-bottom: 15px;
+
+}
