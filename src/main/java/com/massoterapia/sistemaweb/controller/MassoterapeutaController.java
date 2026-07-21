@@ -2,6 +2,7 @@ package com.massoterapia.sistemaweb.controller;
 
 import com.massoterapia.sistemaweb.service.AgendamentoService;
 import com.massoterapia.sistemaweb.service.MassoterapeutaService;
+import com.massoterapia.sistemaweb.service.ServicoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ import java.time.LocalDate;
 
 @Controller
 public class MassoterapeutaController {
+
+    @Autowired
+    private ServicoService servicoService;
 
     @Autowired
     private MassoterapeutaService massoterapeutaService;
@@ -58,31 +62,6 @@ public class MassoterapeutaController {
         return "redirect:/login";
     }
 
-    @PostMapping("/login")
-    public String autenticar(
-            @RequestParam String usuario,
-            @RequestParam String senha,
-            RedirectAttributes attributes,
-            HttpSession session
-    ) {
-        boolean autenticado = massoterapeutaService.autenticar(usuario, senha);
-
-        if (autenticado) {
-
-            session.setAttribute("usuarioLogado", usuario);
-
-            return "redirect:/dashboard";
-        }
-
-        attributes.addFlashAttribute(
-                "erro",
-                "Usuário ou senha inválido"
-        );
-
-        return "redirect:/login";
-
-    }
-
     @GetMapping("/editar/{id}")
     public String editarAgendamento(
             @PathVariable Integer id,
@@ -97,6 +76,11 @@ public class MassoterapeutaController {
         model.addAttribute(
                 "agendamento",
                 agendamentoService.buscarPorId(id)
+        );
+
+        model.addAttribute(
+                "servicos",
+                servicoService.listarTodos()
         );
 
         return "editar-agendamento";
@@ -126,6 +110,59 @@ public class MassoterapeutaController {
 
         return "agenda";
 
+    }
+
+    @PostMapping("/login")
+    public String autenticar(
+            @RequestParam String usuario,
+            @RequestParam String senha,
+            RedirectAttributes attributes,
+            HttpSession session
+    ) {
+        boolean autenticado = massoterapeutaService.autenticar(usuario, senha);
+
+        if (autenticado) {
+
+            session.setAttribute("usuarioLogado", usuario);
+
+            return "redirect:/dashboard";
+        }
+
+        attributes.addFlashAttribute(
+                "erro",
+                "Usuário ou senha inválido"
+        );
+
+        return "redirect:/login";
+
+    }
+
+    @PostMapping("/editar")
+    public String salvarEdicao(
+            @RequestParam Integer id,
+            @RequestParam String nome,
+            @RequestParam String telefone,
+            @RequestParam Integer servicoId,
+            @RequestParam String data,
+            @RequestParam String horario,
+            RedirectAttributes attributes
+    ){
+
+        agendamentoService.editarAgendamento(
+                id,
+                nome,
+                telefone,
+                servicoId,
+                data,
+                horario
+        );
+
+        attributes.addFlashAttribute(
+                "Sucesso",
+                "Agendamento atualizado com sucesso"
+        );
+
+        return "redirect:/agenda";
     }
 
     @PostMapping("/concluir/{id}")

@@ -141,6 +141,37 @@ public class AgendamentoService {
         return nome;
     }
 
+    public void editarAgendamento(
+            Integer id,
+            String nome,
+            String telefone,
+            Integer servicoId,
+            String data,
+            String horario
+    ) {
+
+        Agendamentos agendamento = agendamentoRepository.findById(id).orElseThrow(() -> new RuntimeException("Agendamento não encontrado."));
+
+        Cliente cliente = agendamento.getCliente();
+
+        cliente.setNome(nome);
+        cliente.setTelefone(telefone);
+
+        clienteRepository.save(cliente);
+
+        Servico servico = servicoRepository.findById(servicoId).orElseThrow(() -> new RuntimeException("Serviço não encontrado."));
+
+        agendamento.setServico(servico);
+
+        LocalDate novaData = LocalDate.parse(data);
+        LocalTime novaHora = LocalTime.parse(horario);
+
+        agendamento.setData(LocalDateTime.of(novaData, novaHora));
+
+        agendamentoRepository.save(agendamento);
+
+    }
+
     public void concluirAgendamento(Integer id) {
 
         Agendamentos agendamento = agendamentoRepository

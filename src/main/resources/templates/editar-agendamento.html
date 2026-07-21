@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Agendamento</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Editar Agendamento</h2>
+
+        <form th:action="@{/editar}" method="post">
+
+            <input type="hidden"
+                   name="id"
+                   th:value="${agendamento.id}">
+
+            <!-- Nome -->
+
+            <div class="campo">
+
+                <label>Nome</label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-person"></i>
+
+                    <input type="text"
+                           name="nome"
+                           th:value="${agendamento.cliente.nome}"
+                           required>
+
+                </div>
+
+            </div>
+
+            <!-- Telefone -->
+
+            <div class="campo">
+
+                <label>Telefone</label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-telephone"></i>
+
+                    <input type="text"
+                           name="telefone"
+                           th:value="${agendamento.cliente.telefone}"
+                           required>
+
+                </div>
+
+            </div>
+
+            <!-- Serviço -->
+
+            <div class="campo">
+
+                <label>Serviço</label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-flower1"></i>
+
+                    <select name="servicoId" required>
+
+                        <option
+                                th:each="servico : ${servicos}"
+                                th:value="${servico.id}"
+                                th:text="${servico.nomeServico}"
+                                th:selected="${servico.id == agendamento.servico.id}">
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <!-- Data -->
+
+            <div class="campo">
+
+                <label>Data</label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-calendar-event"></i>
+
+                    <input type="date"
+                           name="data"
+                           th:value="${#temporals.format(agendamento.data,'yyyy-MM-dd')}"
+                           required>
+
+                </div>
+
+            </div>
+
+            <!-- Horário -->
+
+            <div class="campo">
+
+                <label>Horário</label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-clock"></i>
+
+                    <input type="time"
+                           name="horario"
+                           th:value="${#temporals.format(agendamento.data,'HH:mm')}"
+                           required>
+
+                </div>
+
+            </div>
+
+            <div class="botoes">
+
+                <button type="submit" class="btn">
+                    <i class="bi bi-check-circle"></i>
+                    Salvar Alterações
+                </button>
+
+                <a th:href="@{/agenda}" class="btn-voltar">
+                    <i class="bi bi-arrow-left"></i>
+                    Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

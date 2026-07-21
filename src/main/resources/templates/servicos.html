@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Serviços</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Serviços</h1>
+
+        <a th:href="@{/servicos/novo}" class="btn-menu">
+            <i class="bi bi-plus-circle"></i>
+            Novo Serviço
+        </a>
+
+        <br>
+
+        <div th:if="${#lists.isEmpty(servicos)}">
+
+            <p>Nenhum serviço cadastrado.</p>
+
+        </div>
+
+        <div th:each="servico : ${servicos}" class="card-agendamento">
+
+            <h3 th:text="${servico.nomeServico}"></h3>
+
+            <div class="acoes">
+
+                <a th:href="@{'/servicos/editar/' + ${servico.id}}">Editar</a>
+
+                <a th:href="@{'/servicos/excluir/' + ${servico.id}}">Excluir</a>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <a th:href="@{/dashboard}" class="btn-voltar">
+
+            Voltar
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
