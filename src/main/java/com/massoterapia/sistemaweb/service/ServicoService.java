@@ -19,4 +19,8 @@ public class ServicoService {
 
     }
 
+    public Servico salvar(Servico servico) {
+        return servicoRepository.save(servico);
+    }
+
 }

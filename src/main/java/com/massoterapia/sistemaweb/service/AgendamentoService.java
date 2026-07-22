@@ -108,13 +108,24 @@ public class AgendamentoService {
             String horario
     ) {
 
-        Cliente cliente = clienteRepository.findByTelefone(telefone)
-                .orElseGet(() -> {
-                    Cliente novoCliente = new Cliente();
-                    novoCliente.setNome(nome);
-                    novoCliente.setTelefone(telefone);
-                    return clienteRepository.save(novoCliente);
-                });
+        Optional<Cliente> clienteOptional = clienteRepository.findByTelefone(telefone);
+
+        Cliente cliente;
+
+        if (clienteOptional.isPresent()) {
+            cliente = clienteOptional.get();
+
+            if (!cliente.getNome().equalsIgnoreCase(nome)) {
+                throw new AgendamentoException("Já existe um cliente cadastrado com este telefone. Verifique o nome informado ou utilize outro número.");
+            }
+        }
+        else{
+            cliente = new Cliente();
+            cliente.setNome(nome);
+            cliente.setTelefone(telefone);
+
+            clienteRepository.save(cliente);
+        }
 
         Servico servicoBanco = servicoRepository.findByNomeservico(servico);
 
