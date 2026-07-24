@@ -135,6 +135,12 @@ public class AgendamentoService {
 
         LocalDateTime datahora = LocalDateTime.of(date, hora);
 
+        LocalDateTime agora = LocalDateTime.now();
+
+        if (datahora.isBefore(agora)) {
+            throw new AgendamentoException("A data do agendamento não pode ser anterior a data do atual.");
+        }
+
         if (agendamentoRepository.existsByData(datahora)) {
             throw new AgendamentoException("Este horário já está ocupado.");
         }

@@ -142,5 +142,24 @@
 
 </script>
 
+<script>
+
+    setTimeout(() => {
+
+        const mensagens = document.querySelectorAll(".mensagem-sucesso, .mensagem-erro");
+
+        mensagens.forEach(mensagem => {
+            mensagem.style.opacity = "0";
+
+            setTimeout(() => {
+                mensagem.remove();
+            }, 500);
+
+        });
+
+    }, 3000);
+
+</script>
+
 </body>
 </html>

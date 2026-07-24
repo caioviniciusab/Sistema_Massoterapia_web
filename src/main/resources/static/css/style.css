@@ -383,3 +383,19 @@ button:hover {
 .sair:hover{
     background:#b71c1c;
 }
+
+.mensagem-erro{
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.mensagem-sucesso,
+.mensagem-erro{
+    transition: opacity .5s ease;
+}

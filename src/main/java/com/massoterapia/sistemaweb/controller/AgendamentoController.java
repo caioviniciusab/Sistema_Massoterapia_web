@@ -47,6 +47,10 @@ public class AgendamentoController {
 
         List<Agendamentos> agendamentos = agendamentoService.buscarPorTelefone(telefone);
 
+        if(agendamentos.isEmpty()) {
+            model.addAttribute("mensagem", "Nenhum agendamento encontrado para esse telefone.");
+        }
+
         model.addAttribute("agendamentos", agendamentos);
 
         return "consultar";

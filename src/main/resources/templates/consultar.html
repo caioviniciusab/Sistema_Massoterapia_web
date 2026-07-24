@@ -18,6 +18,12 @@
 
 <div class="container">
 
+    <div class="mensagem-erro" th:if="${mensagem}">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <p th:text="${mensagem}"></p>
+    </div>
+
+
     <h1>Consultar Agendamento</h1>
 
     <form action="/consultar" method="post">
@@ -34,9 +40,13 @@
 
         </div>
 
-        <button type="submit">
-            Buscar
-        </button>
+        <a type="submit">
+            <button>Buscar</button>
+        </a>
+
+        <a href="/" class="btn-voltar">
+            Voltar
+        </a>
 
     </form>
 
