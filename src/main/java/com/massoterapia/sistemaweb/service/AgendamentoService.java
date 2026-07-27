@@ -13,12 +13,16 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AgendamentoService {
+
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    DateTimeFormatter htf = DateTimeFormatter.ofPattern("HH:mm");
 
     @Autowired
     private ClienteRepository clienteRepository;
@@ -28,6 +32,9 @@ public class AgendamentoService {
 
     @Autowired
     private AgendamentoRepository agendamentoRepository;
+
+    @Autowired
+    private WhatsAppService whatsappService;
 
     public List<String> buscarHorariosDisponiveis(String data) {
 
@@ -98,6 +105,23 @@ public class AgendamentoService {
 
         agendamentoRepository.save(agendamento);
 
+        String mensagem = """
+                ❌ AGENDAMENTO CANCELADO
+                👤 Cliente: %s
+                📞 Telefone: %s
+                💆 Serviço: %s
+                📅 Data: %s
+                🕒 Horário: %s hrs
+                """.formatted(
+                        agendamento.getCliente().getNome(),
+                        agendamento.getCliente().getTelefone(),
+                        agendamento.getServico().getNomeServico(),
+                        dtf.format(agendamento.getData()),
+                        htf.format(agendamento.getData())
+        );
+
+        whatsappService.enviarMensagem(mensagem);
+
     }
 
     public String salvarCliente(
@@ -153,6 +177,23 @@ public class AgendamentoService {
         agendamento.setStatus("AGENDADO");
 
         agendamentoRepository.save(agendamento);
+
+        String mensagem = """
+            NOVO AGENDAMENTO
+            👤 Cliente: %s
+            📞 Telefone: %s
+            💆 Serviço: %s
+            📅 Data: %s
+            🕒 Horário: %s hrs
+            """.formatted(
+                nome,
+                telefone,
+                servico,
+                dtf.format(date),
+                horario
+        );
+
+        whatsappService.enviarMensagem(mensagem);
 
 
         return nome;

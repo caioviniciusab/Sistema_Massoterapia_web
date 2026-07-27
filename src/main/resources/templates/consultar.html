@@ -18,6 +18,11 @@
 
 <div class="container">
 
+    <div th:if="${sucesso}" class="mensagem-sucesso">
+        <i class="bi bi-check-circle-fill"></i>
+        <span th:text="${sucesso}"></span>
+    </div>
+
     <div class="mensagem-erro" th:if="${mensagem}">
         <i class="bi bi-exclamation-circle-fill"></i>
         <p th:text="${mensagem}"></p>
@@ -106,6 +111,25 @@
         );
 
     }
+
+</script>
+
+<script>
+
+    setTimeout(() => {
+
+        const mensagens = document.querySelectorAll(".mensagem-sucesso, .mensagem-erro");
+
+        mensagens.forEach(mensagem => {
+            mensagem.style.opacity = "0";
+
+            setTimeout(() => {
+                mensagem.remove();
+            }, 500);
+
+        });
+
+    }, 3000);
 
 </script>
 

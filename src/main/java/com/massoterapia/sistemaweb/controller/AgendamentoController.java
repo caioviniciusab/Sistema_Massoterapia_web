@@ -33,7 +33,7 @@ public class AgendamentoController {
     {
         agendamentoService.cancelarAgendamento(id);
 
-        attributes.addFlashAttribute("mensagem", "Agendamento cancelado com sucesso.");
+        attributes.addFlashAttribute("sucesso", "Agendamento cancelado com sucesso.");
 
         return "redirect:/consultar";
 
