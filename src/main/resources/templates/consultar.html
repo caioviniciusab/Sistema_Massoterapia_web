@@ -90,6 +90,10 @@
                         method="post"
                         onsubmit="return confirmarCancelamento()">
 
+                        <input type="hidden"
+                               name="telefone"
+                               th:value="${agendamento.cliente.telefone}">
+
                         <button class="btn-cancelar" type="submit">
                             Cancelar Agendamento
                         </button>

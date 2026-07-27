@@ -23,19 +23,31 @@ public class AgendamentoController {
     }
 
     @GetMapping("/consultar")
-    public String abrirConsulta() {
+    public String abrirConsulta(
+            @RequestParam(required = false) String telefone,
+            Model model
+    ) {
+
+        if(telefone != null && !telefone.isBlank()) {
+
+            model.addAttribute("telefone", telefone);
+
+            model.addAttribute("agendamentos", agendamentoService.buscarPorTelefone(telefone));
+        }
+
         return "consultar";
     }
 
     @PostMapping("/cancelar/{id}")
     public String cancelarAgendamento(@PathVariable Integer id,
+                                      @RequestParam String telefone,
                                       RedirectAttributes attributes)
     {
         agendamentoService.cancelarAgendamento(id);
 
         attributes.addFlashAttribute("sucesso", "Agendamento cancelado com sucesso.");
 
-        return "redirect:/consultar";
+        return "redirect:/consultar?telefone=" + telefone;
 
     }
 
