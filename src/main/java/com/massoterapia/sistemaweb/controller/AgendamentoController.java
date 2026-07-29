@@ -88,17 +88,31 @@ public class AgendamentoController {
             Model model
     ) {
 
-        List<Agendamentos> agendamentos = agendamentoService.buscarPorNomeETelefone(nome, telefone);
-
         model.addAttribute("nome", nome);
         model.addAttribute("telefone", telefone);
 
+        try {
 
-        if(agendamentos.isEmpty()) {
-            model.addAttribute("mensagem", "Nenhum agendamento encontrado para esse telefone.");
+            List<Agendamentos> agendamentos =
+                    agendamentoService.buscarPorNomeETelefone(nome, telefone);
+
+            if (agendamentos.isEmpty()) {
+                model.addAttribute(
+                        "mensagem",
+                        "Nenhum agendamento encontrado."
+                );
+            }
+
+            model.addAttribute("agendamentos", agendamentos);
+
+        } catch (AgendamentoException e) {
+
+            model.addAttribute(
+                    "mensagem",
+                    e.getMessage()
+            );
+
         }
-
-        model.addAttribute("agendamentos", agendamentos);
 
         return "consultar";
     }

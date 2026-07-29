@@ -83,7 +83,9 @@ public class AgendamentoService {
         Cliente cliente = clienteRepository
                 .findByNomeIgnoreCaseAndTelefone(nome, telefone)
                 .orElseThrow(() ->
-                        new RuntimeException("Cliente não encontrado.")
+                        new AgendamentoException(
+                                "Nenhum agendamento encontrado com os dados informados."
+                        )
                 );
 
         return agendamentoRepository.findByCliente(cliente);
