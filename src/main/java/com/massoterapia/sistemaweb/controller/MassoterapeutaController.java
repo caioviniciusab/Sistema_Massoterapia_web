@@ -88,7 +88,7 @@ public class MassoterapeutaController {
 
     @GetMapping("/agenda")
     public String agenda(
-            @RequestParam (required = false) LocalDate data,
+            @RequestParam (required = false) String data,
             HttpSession session,
             Model model
     ) {
@@ -98,14 +98,17 @@ public class MassoterapeutaController {
         }
 
         if (data == null) {
-            data = LocalDate.now();
+            data = LocalDate.now().toString();
         }
 
-        model.addAttribute("dataSelecionada", data);
+        LocalDate dataSelecionada = LocalDate.parse(data);
+
+        model.addAttribute("dataSelecionada", dataSelecionada);
+        model.addAttribute("dataInput", dataSelecionada.toString());
 
         model.addAttribute(
                 "agendamentos",
-                agendamentoService.buscarAgendamentosPorData(data)
+                agendamentoService.buscarAgendamentosPorData(dataSelecionada)
         );
 
         return "agenda";

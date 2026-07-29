@@ -1,6 +1,7 @@
 package com.massoterapia.sistemaweb.repository;
 
 import com.massoterapia.sistemaweb.model.Agendamentos;
+import com.massoterapia.sistemaweb.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -32,4 +33,6 @@ public interface AgendamentoRepository extends JpaRepository<Agendamentos, Integ
     List<Agendamentos> findByClienteTelefone(
             String telefone
     );
+
+    List<Agendamentos> findByCliente(Cliente cliente);
 }

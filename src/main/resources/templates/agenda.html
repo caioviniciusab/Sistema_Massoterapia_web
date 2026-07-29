@@ -96,9 +96,13 @@
 
             </form>
 
-            <form th:action="@{/cancelar/{id}(id=${agendamento.id})}"
+            <form th:action="@{/agenda/cancelar/{id}(id=${agendamento.id})}"
                   method="post"
                   onsubmit="return confirmarCancelamento()">
+
+                <input type="hidden"
+                       name="data"
+                       th:value="${dataSelecionada}">
 
                 <button class="btn-cancelar" type="submit">
                     Cancelar

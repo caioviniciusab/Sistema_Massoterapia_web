@@ -9,4 +9,9 @@ public interface ClienteRepository
         extends JpaRepository<Cliente, Integer> {
 
     Optional<Cliente> findByTelefone(String telefone);
+
+    Optional<Cliente> findByNomeIgnoreCaseAndTelefone(
+            String nome,
+            String telefone
+    );
 }

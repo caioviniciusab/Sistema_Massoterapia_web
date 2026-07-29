@@ -75,10 +75,18 @@ public class AgendamentoService {
     }
 
 
-    public List<Agendamentos> buscarPorTelefone(String telefone) {
+    public List<Agendamentos> buscarPorNomeETelefone(
+            String nome,
+            String telefone
+    ) {
 
-        return agendamentoRepository.findByClienteTelefone(telefone);
+        Cliente cliente = clienteRepository
+                .findByNomeIgnoreCaseAndTelefone(nome, telefone)
+                .orElseThrow(() ->
+                        new RuntimeException("Cliente não encontrado.")
+                );
 
+        return agendamentoRepository.findByCliente(cliente);
     }
 
     public List<Agendamentos> buscarAgendamentosPorData(LocalDate data) {

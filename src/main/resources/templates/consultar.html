@@ -35,12 +35,24 @@
 
         <div class="campo">
 
+            <label>Nome</label>
+
+            <input
+                    type="text"
+                    name="nome"
+                    placeholder="Digite seu nome"
+                    required>
+
+        </div>
+
+        <div class="campo">
+
             <label>Telefone</label>
 
             <input
                     type="text"
                     name="telefone"
-                    placeholder="(00) 00000-0000"
+                    placeholder="(84) 99999-9999"
                     required>
 
         </div>
@@ -91,8 +103,12 @@
                         onsubmit="return confirmarCancelamento()">
 
                         <input type="hidden"
-                               name="telefone"
-                               th:value="${agendamento.cliente.telefone}">
+                        name="nome"
+                        th:value="${nome}">
+
+                        <input type="hidden"
+                        name="telefone"
+                        th:value="${telefone}">
 
                         <button class="btn-cancelar" type="submit">
                             Cancelar Agendamento
