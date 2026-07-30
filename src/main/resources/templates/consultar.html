@@ -5,7 +5,10 @@
 
     <meta charset="UTF-8">
 
-    <title>Consultar Agendamento</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Consultar agendamentos</title>
 
     <link rel="stylesheet" href="/css/style.css">
 
@@ -16,111 +19,312 @@
 
 <body>
 
-<div class="container">
+<main class="pagina-consulta">
 
-    <div th:if="${sucesso}" class="mensagem-sucesso">
-        <i class="bi bi-check-circle-fill"></i>
-        <span th:text="${sucesso}"></span>
-    </div>
+    <!-- Cabeçalho -->
+    <header class="cabecalho-mobile">
 
-    <div class="mensagem-erro" th:if="${mensagem}">
-        <i class="bi bi-exclamation-circle-fill"></i>
-        <p th:text="${mensagem}"></p>
-    </div>
+        <a href="/" class="botao-menu" aria-label="Voltar para o início">
+            <i class="bi bi-chevron-left"></i>
+        </a>
 
+        <div class="marca">
 
-    <h1>Consultar Agendamento</h1>
+            <div class="marca-icone">
+                <i class="bi bi-flower1"></i>
+            </div>
 
-    <form action="/consultar" method="post">
-
-        <div class="campo">
-
-            <label>Nome</label>
-
-            <input
-                    type="text"
-                    name="nome"
-                    placeholder="Digite seu nome"
-                    required>
+            <div class="marca-texto">
+                <strong>Massoterapia</strong>
+                <span>Consulte seus horários</span>
+            </div>
 
         </div>
 
-        <div class="campo">
+        <div class="espaco-cabecalho"></div>
 
-            <label>Telefone</label>
+    </header>
 
-            <input
-                    type="text"
-                    name="telefone"
-                    placeholder="(84) 99999-9999"
-                    required>
+    <section class="conteudo-consulta">
+
+        <!-- Apresentação -->
+        <div class="apresentacao">
+
+            <div class="icone-apresentacao">
+                <i class="bi bi-calendar2-check"></i>
+            </div>
+
+            <h1>Meus agendamentos</h1>
+
+            <div class="linha-destaque"></div>
+
+            <p>
+                Informe seu nome e telefone para consultar seus agendamentos.
+            </p>
 
         </div>
 
-        <a type="submit">
-            <button>Buscar</button>
-        </a>
+        <!-- Mensagens -->
+        <div th:if="${sucesso}"
+             class="mensagem mensagem-sucesso">
 
-        <a href="/" class="btn-voltar">
-            Voltar
-        </a>
-
-    </form>
-
-    <hr>
-
-    <div th:each="agendamento : ${agendamentos}" class="card-agendamento">
-
-        <h3>
-            <i class="bi bi-flower1"></i>
-            <span th:text="${agendamento.servico.nomeServico}"></span>
-        </h3>
-
-        <p>
-            <i class="bi bi-calendar-event"></i>
-            <strong>Data:</strong>
-            <span th:text="${#temporals.format(agendamento.data,'dd/MM/yyyy')}"></span>
-        </p>
-
-        <p>
-            <i class="bi bi-clock"></i>
-            <strong>Horário:</strong>
-            <span th:text="${#temporals.format(agendamento.data,'HH:mm')}"></span>
-        </p>
-
-        <p>
             <i class="bi bi-check-circle-fill"></i>
-            <strong>Status:</strong>
 
-            <span
-                    th:text="${agendamento.status}"
-                    th:classappend="${agendamento.status == 'AGENDADO'} ? 'status-agendado' :
-                            (${agendamento.status == 'CANCELADO'} ? 'status-cancelado' : 'status-concluido')">
+            <span th:text="${sucesso}"></span>
+
+        </div>
+
+        <div th:if="${mensagem}"
+             class="mensagem mensagem-erro">
+
+            <i class="bi bi-exclamation-circle-fill"></i>
+
+            <span th:text="${mensagem}"></span>
+
+        </div>
+
+        <!-- Formulário de pesquisa -->
+        <form action="/consultar"
+              method="post"
+              class="form-consulta">
+
+            <div class="campo">
+
+                <label for="nome">
+                    Nome completo
+                </label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-person"></i>
+
+                    <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            th:value="${nome}"
+                            placeholder="Digite seu nome completo"
+                            autocomplete="name"
+                            required>
+
+                </div>
+
+            </div>
+
+            <div class="campo">
+
+                <label for="telefone">
+                    Telefone
+                </label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-telephone"></i>
+
+                    <input
+                            type="tel"
+                            id="telefone"
+                            name="telefone"
+                            th:value="${telefone}"
+                            placeholder="(84) 99999-9999"
+                            autocomplete="tel"
+                            required>
+
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn-buscar">
+
+                <i class="bi bi-search"></i>
+
+                Buscar agendamentos
+
+            </button>
+
+        </form>
+
+        <!-- Resultado -->
+        <section th:if="${agendamentos != null and !agendamentos.isEmpty()}"
+                 class="resultado-consulta">
+
+            <div class="titulo-resultado">
+
+                <div>
+
+                    <span class="titulo-secundario">
+                        Resultado da consulta
+                    </span>
+
+                    <h2>Agendamentos encontrados</h2>
+
+                </div>
+
+                <div class="quantidade-agendamentos">
+
+                    <i class="bi bi-calendar-check"></i>
+
+                    <span th:text="${#lists.size(agendamentos)}"></span>
+
+                </div>
+
+            </div>
+
+            <article th:each="agendamento : ${agendamentos}"
+                     class="card-consulta">
+
+                <div class="card-consulta-topo">
+
+                    <div class="icone-servico">
+                        <i class="bi bi-flower1"></i>
+                    </div>
+
+                    <div class="nome-servico">
+
+                        <span>Serviço</span>
+
+                        <h3 th:text="${agendamento.servico.nomeServico}">
+                            Nome do serviço
+                        </h3>
+
+                    </div>
+
+                    <span
+                            class="status-agendamento"
+                            th:text="${agendamento.status}"
+                            th:classappend="${agendamento.status == 'AGENDADO'} ? ' status-agendado' :
+                            (${agendamento.status == 'CANCELADO'} ? ' status-cancelado' : ' status-concluido')">
+
+                        AGENDADO
+
+                    </span>
+
+                </div>
+
+                <div class="detalhes-agendamento">
+
+                    <div class="detalhe-item">
+
+                        <div class="detalhe-icone">
+                            <i class="bi bi-calendar-event"></i>
+                        </div>
+
+                        <div>
+
+                            <span>Data</span>
+
+                            <strong
+                                    th:text="${#temporals.format(agendamento.data, 'dd/MM/yyyy')}">
+                                01/01/2026
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <div class="detalhe-item">
+
+                        <div class="detalhe-icone">
+                            <i class="bi bi-clock"></i>
+                        </div>
+
+                        <div>
+
+                            <span>Horário</span>
+
+                            <strong
+                                    th:text="${#temporals.format(agendamento.data, 'HH:mm')}">
+                                08:00
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
                 <form
                         th:if="${agendamento.status == 'AGENDADO'}"
                         th:action="@{/cancelar/{id}(id=${agendamento.id})}"
                         method="post"
+                        class="form-cancelamento"
                         onsubmit="return confirmarCancelamento()">
 
-                        <input type="hidden"
-                        name="nome"
-                        th:value="${nome}">
+                    <input
+                            type="hidden"
+                            name="nome"
+                            th:value="${nome}">
 
-                        <input type="hidden"
-                        name="telefone"
-                        th:value="${telefone}">
+                    <input
+                            type="hidden"
+                            name="telefone"
+                            th:value="${telefone}">
 
-                        <button class="btn-cancelar" type="submit">
-                            Cancelar Agendamento
-                        </button>
+                    <button class="btn-cancelar-consulta"
+                            type="submit">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Cancelar agendamento
+
+                    </button>
+
                 </form>
-        </span>
 
-        </p>
+            </article>
 
-    </div>
+        </section>
 
-</div>
+        <!-- Orientação inicial -->
+        <aside th:if="${agendamentos == null and mensagem == null}"
+               class="card-orientacao">
+
+            <i class="bi bi-info-circle"></i>
+
+            <div>
+
+                <strong>Como consultar?</strong>
+
+                <p>
+                    Digite os mesmos dados utilizados no momento do agendamento.
+                </p>
+
+            </div>
+
+        </aside>
+
+    </section>
+
+    <!-- Navegação inferior -->
+    <nav class="navegacao-inferior">
+
+        <a href="/agendar" class="item-navegacao">
+
+            <i class="bi bi-calendar-plus"></i>
+
+            <span>Agendar</span>
+
+        </a>
+
+        <a href="/consultar" class="item-navegacao ativo">
+
+            <i class="bi bi-search"></i>
+
+            <span>Consultar</span>
+
+        </a>
+
+        <a href="/login" class="item-navegacao">
+
+            <i class="bi bi-person"></i>
+
+            <span>Profissional</span>
+
+        </a>
+
+    </nav>
+
+</main>
 
 <script>
 
@@ -138,10 +342,14 @@
 
     setTimeout(() => {
 
-        const mensagens = document.querySelectorAll(".mensagem-sucesso, .mensagem-erro");
+        const mensagens = document.querySelectorAll(
+            ".pagina-consulta .mensagem-sucesso, " +
+            ".pagina-consulta .mensagem-erro"
+        );
 
         mensagens.forEach(mensagem => {
-            mensagem.style.opacity = "0";
+
+            mensagem.classList.add("mensagem-escondendo");
 
             setTimeout(() => {
                 mensagem.remove();
