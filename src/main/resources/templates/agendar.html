@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Agendamento</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Agendar horário</title>
 
     <link rel="stylesheet" href="/css/style.css">
 
@@ -12,105 +17,260 @@
 
 <body>
 
-<div class="container">
+<main class="pagina-agendamento">
 
-    <h1>Agendamento</h1>
+    <!-- Cabeçalho -->
+    <header class="cabecalho-mobile">
 
-    <div th:if="${sucesso}" class="mensagem-sucesso">
-        <i class="bi bi-check-circle-fill"></i>
-        <span th:text="${sucesso}"></span>
-    </div>
-
-    <div th:if="${erro}" class="mensagem-erro">
-        <i class="bi bi-exclamation-circle-fill"></i>
-        <span th:text="${erro}"></span>
-    </div>
-
-    <form action="/salvar" method="post" class="form-agendamento">
-
-        <div class="campo">
-            <label>Nome</label>
-
-            <div class="input-icon">
-                <i class="bi bi-person-fill"></i>
-                <input type="text" name="nome" placeholder="Digite seu nome" required>
-            </div>
-        </div>
-
-        <div class="campo">
-            <label>Telefone</label>
-
-            <div class="input-icon">
-                <i class="bi bi-telephone-fill"></i>
-                <input type="text" name="telefone" placeholder="(00) 00000-0000" required>
-            </div>
-        </div>
-
-        <div class="campo">
-            <label>Tipo de Massagem</label>
-
-            <div class="input-icon">
-                <i class="bi bi-flower1"></i>
-
-                <select name="servico" required>
-                    <option value="" selected disabled>Selecione o tipo de massagem</option>
-                    <option>Massagem Facial</option>
-                    <option>Massagem Relaxante Completa</option>
-                    <option>Massagem Relaxante Com Vela</option>
-                    <option>Massagem Relaxante Com Pedras Quentes</option>
-                    <option>Massagem Relaxante Com Bambús</option>
-                    <option>Ventosaterapia</option>
-                    <option>Escalda Pés</option>
-                    <option>Drenagem Linfática Facial</option>
-                    <option>Drenagem Linfática Corporal</option>
-                    <option>Detox</option>
-                    <option>Manta Térmica</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="campo">
-            <label>Data</label>
-
-            <div class="input-icon">
-                <i class="bi bi-calendar-event"></i>
-                <input type="date" id="data" name="data" required>
-            </div>
-        </div>
-
-        <div class="campo">
-            <label>Horário</label>
-
-            <div class="input-icon">
-                <i class="bi bi-clock"></i>
-
-                <select id="horario" name="horario" required>
-                    <option value="" selected disabled>Selecione o horário</option>
-                    <option>08:00</option>
-                    <option>09:00</option>
-                    <option>10:00</option>
-                    <option>11:00</option>
-                    <option>13:00</option>
-                    <option>14:00</option>
-                    <option>15:00</option>
-                    <option>16:00</option>
-                    <option>17:00</option>
-                    <option>18:00</option>
-                </select>
-            </div>
-        </div>
-
-        <button class="btn-confirmar" type="submit">
-            Confirmar
-        </button>
-
-        <a href="/" class="btn-voltar">
-            Voltar
+        <a href="/" class="botao-menu" aria-label="Voltar para o início">
+            <i class="bi bi-list"></i>
         </a>
 
-    </form>
+        <div class="marca">
+            <div class="marca-icone">
+                <i class="bi bi-flower1"></i>
+            </div>
 
-</div>
+            <div class="marca-texto">
+                <strong>Massoterapia</strong>
+                <span>Agende seu horário</span>
+            </div>
+        </div>
+
+        <div class="espaco-cabecalho"></div>
+
+    </header>
+
+    <section class="conteudo-agendamento">
+
+        <!-- Apresentação -->
+        <div class="apresentacao">
+
+            <div class="icone-apresentacao">
+                <i class="bi bi-calendar-heart"></i>
+            </div>
+
+            <h1>Agende seu horário</h1>
+
+            <div class="linha-destaque"></div>
+
+            <p>
+                Preencha os dados abaixo para realizar seu agendamento.
+            </p>
+
+        </div>
+
+        <!-- Mensagens -->
+        <div th:if="${sucesso}"
+             class="mensagem mensagem-sucesso">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span th:text="${sucesso}"></span>
+
+        </div>
+
+        <div th:if="${erro}"
+             class="mensagem mensagem-erro">
+
+            <i class="bi bi-exclamation-circle-fill"></i>
+
+            <span th:text="${erro}"></span>
+
+        </div>
+
+        <!-- Formulário -->
+        <form action="/salvar"
+              method="post"
+              class="form-agendamento">
+
+            <div class="campo">
+
+                <label for="nome">
+                    Nome completo
+                </label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-person"></i>
+
+                    <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Digite seu nome completo"
+                            autocomplete="name"
+                            required>
+
+                </div>
+
+            </div>
+
+            <div class="campo">
+
+                <label for="telefone">
+                    Telefone
+                </label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-telephone"></i>
+
+                    <input
+                            type="tel"
+                            id="telefone"
+                            name="telefone"
+                            placeholder="(00) 00000-0000"
+                            autocomplete="tel"
+                            required>
+
+                </div>
+
+            </div>
+
+            <div class="campo">
+
+                <label for="servico">
+                    Tipo de massagem
+                </label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-flower1"></i>
+
+                    <select id="servico"
+                            name="servico"
+                            required>
+
+                        <option value="" selected disabled>
+                            Selecione o tipo de massagem
+                        </option>
+
+                        <option>Massagem Facial</option>
+                        <option>Massagem Relaxante Completa</option>
+                        <option>Massagem Relaxante Com Vela</option>
+                        <option>Massagem Relaxante Com Pedras Quentes</option>
+                        <option>Massagem Relaxante Com Bambús</option>
+                        <option>Ventosaterapia</option>
+                        <option>Escalda Pés</option>
+                        <option>Drenagem Linfática Facial</option>
+                        <option>Drenagem Linfática Corporal</option>
+                        <option>Detox</option>
+                        <option>Manta Térmica</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="campo">
+
+                <label for="data">
+                    Data
+                </label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-calendar-event"></i>
+
+                    <input
+                            type="date"
+                            id="data"
+                            name="data"
+                            required>
+
+                </div>
+
+            </div>
+
+            <div class="campo">
+
+                <label for="horario">
+                    Horário
+                </label>
+
+                <div class="input-icon">
+
+                    <i class="bi bi-clock"></i>
+
+                    <select
+                            id="horario"
+                            name="horario"
+                            disabled
+                            required>
+
+                        <option value="" selected disabled>
+                            Primeiro selecione uma data
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button class="btn-confirmar"
+                    type="submit">
+
+                <i class="bi bi-calendar-check"></i>
+
+                Agendar horário
+
+            </button>
+
+        </form>
+
+        <!-- Aviso -->
+        <aside class="card-aviso">
+
+            <div class="aviso-titulo">
+
+                <i class="bi bi-info-circle"></i>
+
+                <strong>Importante</strong>
+
+            </div>
+
+            <p>
+                Chegue com alguns minutos de antecedência para aproveitar
+                melhor o seu atendimento.
+            </p>
+
+        </aside>
+
+    </section>
+
+    <!-- Navegação inferior -->
+    <nav class="navegacao-inferior">
+
+        <a href="/agendar" class="item-navegacao ativo">
+
+            <i class="bi bi-calendar-plus"></i>
+
+            <span>Agendar</span>
+
+        </a>
+
+        <a href="/consultar" class="item-navegacao">
+
+            <i class="bi bi-search"></i>
+
+            <span>Consultar</span>
+
+        </a>
+
+        <a href="/login" class="item-navegacao">
+
+            <i class="bi bi-person"></i>
+
+            <span>Profissional</span>
+
+        </a>
+
+    </nav>
+
+</main>
 
 <script>
 
@@ -119,15 +279,55 @@
 
     campoData.addEventListener("change", function () {
 
+        selectHorario.disabled = true;
+
+        selectHorario.innerHTML = `
+            <option value="" selected disabled>
+                Carregando horários...
+            </option>
+        `;
+
         fetch("/horarios?data=" + campoData.value)
-            .then(response => response.json())
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error("Não foi possível buscar os horários.");
+                }
+
+                return response.json();
+
+            })
+
             .then(horarios => {
 
                 selectHorario.innerHTML = "";
 
+                if (horarios.length === 0) {
+
+                    selectHorario.innerHTML = `
+                        <option value="" selected disabled>
+                            Nenhum horário disponível
+                        </option>
+                    `;
+
+                    selectHorario.disabled = true;
+
+                    return;
+                }
+
+                const opcaoInicial = document.createElement("option");
+
+                opcaoInicial.value = "";
+                opcaoInicial.textContent = "Selecione o horário";
+                opcaoInicial.selected = true;
+                opcaoInicial.disabled = true;
+
+                selectHorario.appendChild(opcaoInicial);
+
                 horarios.forEach(horario => {
 
-                    let option = document.createElement("option");
+                    const option = document.createElement("option");
 
                     option.value = horario;
                     option.textContent = horario;
@@ -135,6 +335,20 @@
                     selectHorario.appendChild(option);
 
                 });
+
+                selectHorario.disabled = false;
+
+            })
+
+            .catch(() => {
+
+                selectHorario.innerHTML = `
+                    <option value="" selected disabled>
+                        Erro ao carregar os horários
+                    </option>
+                `;
+
+                selectHorario.disabled = true;
 
             });
 
@@ -146,10 +360,13 @@
 
     setTimeout(() => {
 
-        const mensagens = document.querySelectorAll(".mensagem-sucesso, .mensagem-erro");
+        const mensagens = document.querySelectorAll(
+            ".mensagem-sucesso, .mensagem-erro"
+        );
 
         mensagens.forEach(mensagem => {
-            mensagem.style.opacity = "0";
+
+            mensagem.classList.add("mensagem-escondendo");
 
             setTimeout(() => {
                 mensagem.remove();
