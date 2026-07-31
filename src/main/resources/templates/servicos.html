@@ -5,9 +5,13 @@
 
     <meta charset="UTF-8">
 
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Serviços</title>
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/servicos.css}">
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -16,50 +20,215 @@
 
 <body>
 
-<div class="container">
+<main class="pagina-servicos">
 
-    <div class="card">
+    <header class="cabecalho-servicos">
 
-        <h1>Serviços</h1>
+        <a th:href="@{/dashboard}"
+           class="botao-voltar-servicos"
+           aria-label="Voltar ao painel">
 
-        <a th:href="@{/servicos/novo}" class="btn-menu">
-            <i class="bi bi-plus-circle"></i>
-            Novo Serviço
+            <i class="bi bi-chevron-left"></i>
+
         </a>
 
-        <br>
+        <div class="marca-servicos">
 
-        <div th:if="${#lists.isEmpty(servicos)}">
+            <div class="marca-servicos-icone">
+                <i class="bi bi-flower1"></i>
+            </div>
 
-            <p>Nenhum serviço cadastrado.</p>
+            <div class="marca-servicos-texto">
 
-        </div>
+                <strong>Serviços</strong>
 
-        <div th:each="servico : ${servicos}" class="card-agendamento">
-
-            <h3 th:text="${servico.nomeServico}"></h3>
-
-            <div class="acoes">
-
-                <a th:href="@{'/servicos/editar/' + ${servico.id}}">Editar</a>
-
-                <a th:href="@{'/servicos/excluir/' + ${servico.id}}">Excluir</a>
+                <span>Gerenciamento</span>
 
             </div>
 
         </div>
 
-        <br>
+        <div class="espaco-cabecalho-servicos"></div>
 
-        <a th:href="@{/dashboard}" class="btn-voltar">
+    </header>
 
-            Voltar
+    <section class="conteudo-servicos">
+
+        <div class="apresentacao-servicos">
+
+            <div>
+
+                <span class="titulo-secundario-servicos">
+                    Área profissional
+                </span>
+
+                <h1>Serviços cadastrados</h1>
+
+                <p>
+                    Gerencie os serviços disponíveis para agendamento.
+                </p>
+
+            </div>
+
+            <a th:href="@{/servicos/novo}"
+               class="btn-novo-servico">
+
+                <i class="bi bi-plus-lg"></i>
+
+                Novo serviço
+
+            </a>
+
+        </div>
+
+        <section class="resumo-servicos">
+
+            <div class="resumo-servicos-icone">
+                <i class="bi bi-flower1"></i>
+            </div>
+
+            <div>
+
+                <span>Total de serviços</span>
+
+                <strong th:text="${#lists.size(servicos)}">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+        <div th:if="${#lists.isEmpty(servicos)}"
+             class="servicos-vazio">
+
+            <div class="servicos-vazio-icone">
+                <i class="bi bi-folder-x"></i>
+            </div>
+
+            <h2>Nenhum serviço cadastrado</h2>
+
+            <p>
+                Cadastre o primeiro serviço para disponibilizá-lo nos agendamentos.
+            </p>
+
+            <a th:href="@{/servicos/novo}"
+               class="btn-cadastrar-primeiro-servico">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Cadastrar serviço
+
+            </a>
+
+        </div>
+
+        <section th:if="${!#lists.isEmpty(servicos)}"
+                 class="lista-servicos">
+
+            <article th:each="servico : ${servicos}"
+                     class="card-servico">
+
+                <div class="informacoes-servico">
+
+                    <div class="icone-card-servico">
+                        <i class="bi bi-flower1"></i>
+                    </div>
+
+                    <div class="nome-servico">
+
+                        <span>Serviço</span>
+
+                        <h2 th:text="${servico.nomeServico}">
+                            Nome do serviço
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <div class="acoes-servico">
+
+                    <a th:href="@{'/servicos/editar/' + ${servico.id}}"
+                       class="btn-acao-servico btn-editar-servico">
+
+                        <i class="bi bi-pencil"></i>
+
+                        Editar
+
+                    </a>
+
+                    <a th:href="@{'/servicos/excluir/' + ${servico.id}}"
+                       class="btn-acao-servico btn-excluir-servico"
+                       onclick="return confirmarExclusao()">
+
+                        <i class="bi bi-trash"></i>
+
+                        Excluir
+
+                    </a>
+
+                </div>
+
+            </article>
+
+        </section>
+
+    </section>
+
+    <nav class="navegacao-dashboard">
+
+        <a th:href="@{/dashboard}"
+           class="item-navegacao-dashboard">
+
+            <i class="bi bi-house-door"></i>
+
+            <span>Início</span>
 
         </a>
 
-    </div>
+        <a th:href="@{/agenda}"
+           class="item-navegacao-dashboard">
 
-</div>
+            <i class="bi bi-calendar-check"></i>
+
+            <span>Agenda</span>
+
+        </a>
+
+        <a th:href="@{/servicos}"
+           class="item-navegacao-dashboard ativo">
+
+            <i class="bi bi-flower1"></i>
+
+            <span>Serviços</span>
+
+        </a>
+
+        <a th:href="@{/logout}"
+           class="item-navegacao-dashboard">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            <span>Sair</span>
+
+        </a>
+
+    </nav>
+
+</main>
+
+<script>
+
+    function confirmarExclusao() {
+
+        return confirm(
+            "Tem certeza que deseja excluir este serviço?"
+        );
+
+    }
+
+</script>
 
 </body>
 
