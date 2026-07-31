@@ -5,6 +5,9 @@
 
     <meta charset="UTF-8">
 
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Painel da Massoterapeuta</title>
 
     <link rel="stylesheet" href="/css/style.css">
@@ -16,39 +19,231 @@
 
 <body>
 
-<div class="container">
+<main class="pagina-dashboard">
 
-    <div class="card">
+    <header class="cabecalho-dashboard">
 
-        <h1>Painel da Massoterapeuta</h1>
+        <div class="marca-dashboard">
 
-        <div class="menu-dashboard">
-
-            <a th:href="@{/agenda}" class="btn-menu">
-                <i class="bi bi-calendar-check"></i>
-                Agenda do Dia
-            </a>
-
-            <a th:href="@{/clientes}" class="btn-menu">
-                <i class="bi bi-people"></i>
-                Clientes
-            </a>
-
-            <a th:href="@{/servicos}" class="btn-menu">
+            <div class="marca-dashboard-icone">
                 <i class="bi bi-flower1"></i>
-                Serviços
-            </a>
+            </div>
 
-            <a th:href="@{/logout}" class="btn-menu sair">
-                <i class="bi bi-box-arrow-right"></i>
-                Sair
-            </a>
+            <div class="marca-dashboard-texto">
+
+                <strong>Massoterapia</strong>
+
+                <span>Painel profissional</span>
+
+            </div>
 
         </div>
 
-    </div>
+        <a th:href="@{/logout}"
+           class="botao-sair-cabecalho"
+           aria-label="Sair do sistema">
 
-</div>
+            <i class="bi bi-box-arrow-right"></i>
+
+        </a>
+
+    </header>
+
+    <section class="conteudo-dashboard">
+
+        <div class="boas-vindas-dashboard">
+
+            <span class="saudacao-dashboard">
+                Área profissional
+            </span>
+
+            <h1>Painel da Massoterapeuta</h1>
+
+            <p>
+                Gerencie seus agendamentos, clientes e serviços em um só lugar.
+            </p>
+
+        </div>
+
+        <section class="resumo-dashboard">
+
+            <div class="card-resumo destaque">
+
+                <div class="icone-resumo">
+                    <i class="bi bi-calendar-check"></i>
+                </div>
+
+                <div class="conteudo-resumo">
+
+                    <span>Agendamentos</span>
+
+                    <strong th:text="${quantidadeAgendados != null ? quantidadeAgendados : 0}">
+                        0
+                    </strong>
+
+                    <small>Agendamentos de hoje</small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="secao-menu-dashboard">
+
+            <div class="titulo-secao-dashboard">
+
+                <div>
+
+                    <span>Acesso rápido</span>
+
+                    <h2>Gerenciamento</h2>
+
+                </div>
+
+                <i class="bi bi-grid"></i>
+
+            </div>
+
+            <div class="menu-dashboard-moderno">
+
+                <a th:href="@{/agenda}"
+                   class="card-menu-dashboard">
+
+                    <div class="icone-menu-dashboard agenda">
+                        <i class="bi bi-calendar2-check"></i>
+                    </div>
+
+                    <div class="texto-menu-dashboard">
+
+                        <strong>Agenda do dia</strong>
+
+                        <span>
+                            Consulte, conclua ou cancele os atendimentos.
+                        </span>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right seta-menu"></i>
+
+                </a>
+
+                <a th:href="@{/clientes}"
+                   class="card-menu-dashboard">
+
+                    <div class="icone-menu-dashboard clientes">
+                        <i class="bi bi-people"></i>
+                    </div>
+
+                    <div class="texto-menu-dashboard">
+
+                        <strong>Clientes</strong>
+
+                        <span>
+                            Consulte os clientes cadastrados no sistema.
+                        </span>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right seta-menu"></i>
+
+                </a>
+
+                <a th:href="@{/servicos}"
+                   class="card-menu-dashboard">
+
+                    <div class="icone-menu-dashboard servicos">
+                        <i class="bi bi-flower1"></i>
+                    </div>
+
+                    <div class="texto-menu-dashboard">
+
+                        <strong>Serviços</strong>
+
+                        <span>
+                            Cadastre, edite ou remova os serviços disponíveis.
+                        </span>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right seta-menu"></i>
+
+                </a>
+
+            </div>
+
+        </section>
+
+        <aside class="card-aviso-dashboard">
+
+            <div class="icone-aviso-dashboard">
+                <i class="bi bi-shield-check"></i>
+            </div>
+
+            <div>
+
+                <strong>Área protegida</strong>
+
+                <p>
+                    Para sua segurança, lembre-se de sair do sistema ao finalizar o uso.
+                </p>
+
+            </div>
+
+        </aside>
+
+        <a th:href="@{/logout}"
+           class="btn-sair-dashboard">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            Sair do sistema
+
+        </a>
+
+    </section>
+
+    <nav class="navegacao-dashboard">
+
+        <a th:href="@{/dashboard}"
+           class="item-navegacao-dashboard ativo">
+
+            <i class="bi bi-house-door"></i>
+
+            <span>Início</span>
+
+        </a>
+
+        <a th:href="@{/agenda}"
+           class="item-navegacao-dashboard">
+
+            <i class="bi bi-calendar-check"></i>
+
+            <span>Agenda</span>
+
+        </a>
+
+        <a th:href="@{/clientes}"
+           class="item-navegacao-dashboard">
+
+            <i class="bi bi-people"></i>
+
+            <span>Clientes</span>
+
+        </a>
+
+        <a th:href="@{/servicos}"
+           class="item-navegacao-dashboard">
+
+            <i class="bi bi-flower1"></i>
+
+            <span>Serviços</span>
+
+        </a>
+
+    </nav>
+
+</main>
 
 </body>
 

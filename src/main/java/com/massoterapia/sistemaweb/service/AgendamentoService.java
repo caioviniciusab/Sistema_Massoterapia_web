@@ -103,6 +103,22 @@ public class AgendamentoService {
 
     }
 
+    public long quantidadeAgendadosHoje() {
+
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicio = hoje.atStartOfDay();
+
+        LocalDateTime fim = hoje.atTime(LocalTime.MAX);
+
+        return agendamentoRepository.countByStatusAndDataBetween(
+                "AGENDADO",
+                inicio,
+                fim
+        );
+
+    }
+
     public long quantidadeAgendados(){
         return agendamentoRepository.countByStatus("Agendado");
     }

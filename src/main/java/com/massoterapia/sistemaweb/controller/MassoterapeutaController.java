@@ -45,8 +45,8 @@ public class MassoterapeutaController {
         }
 
         model.addAttribute(
-                "agendados",
-                agendamentoService.quantidadeAgendados()
+                "quantidadeAgendados",
+                agendamentoService.quantidadeAgendadosHoje()
         );
 
         return "dashboard";

@@ -5,7 +5,10 @@
 
     <meta charset="UTF-8">
 
-    <title>Agenda do Dia</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Agenda</title>
 
     <link rel="stylesheet" href="/css/style.css">
 
@@ -16,115 +19,376 @@
 
 <body>
 
-<div class="container">
+<main class="pagina-agenda">
 
-    <h3 th:text="${#temporals.format(dataSelecionada, 'dd/MM/yyyy')}"></h3>
+    <header class="cabecalho-agenda">
 
-    <h1>Agenda</h1>
+        <a th:href="@{/dashboard}"
+           class="botao-voltar-agenda"
+           aria-label="Voltar ao painel">
 
-    <div th:if="${sucesso}" class="mensagem-sucesso">
-        <i class="bi bi-check-circle-fill"></i>
-        <span th:text="${sucesso}"></span>
-    </div>
+            <i class="bi bi-chevron-left"></i>
 
-    <form th:action="@{/agenda}" method="get">
+        </a>
 
-        <label>Data</label>
+        <div class="marca-agenda">
 
-        <input
-                type="date"
-                name="data"
-                th:value="${dataSelecionada}">
+            <div class="marca-agenda-icone">
+                <i class="bi bi-calendar2-check"></i>
+            </div>
 
-        <button type="submit">
-            Buscar
-        </button>
+            <div class="marca-agenda-texto">
 
-    </form>
+                <strong>Agenda</strong>
 
-    <div th:if="${agendamentos.isEmpty()}">
-        <p>Não há agendamentos para hoje.</p>
-    </div>
+                <span>Gerenciamento diário</span>
 
-    <div th:each="agendamento : ${agendamentos}" class="card-agendamento">
-
-        <h3>
-            <i class="bi bi-person-fill"></i>
-            <span th:text="${agendamento.cliente.nome}"></span>
-        </h3>
-
-        <p>
-            <i class="bi bi-flower1"></i>
-            <strong>Serviço:</strong>
-            <span th:text="${agendamento.servico.nomeServico}"></span>
-        </p>
-
-        <h2 class="horario"
-            th:text="${#temporals.format(agendamento.data,'HH:mm')}">
-        </h2>
-
-        <p>
-            <i class="bi bi-calendar-event"></i>
-            <strong>Data:</strong>
-            <span th:text="${#temporals.format(agendamento.data,'dd/MM/yyyy')}"></span>
-        </p>
-
-        <p>
-            <i class="bi bi-check-circle"></i>
-            <strong>Status:</strong>
-
-            <span th:text="${agendamento.status}"
-                  th:classappend="${agendamento.status == 'AGENDADO'} ? 'status-agendado' :
-                  (${agendamento.status == 'CONCLUIDO'} ? 'status-concluido' : 'status-cancelado')">
-            </span>
-
-        </p>
-
-        <div class="acoes" th:if="${agendamento.status == 'AGENDADO'}">
-
-            <a th:href="@{/editar/{id}(id=${agendamento.id})}"
-               class="btn-editar">
-                Editar
-            </a>
-
-            <form th:action="@{/concluir/{id}(id=${agendamento.id})}"
-                  method="post">
-
-                <button class="btn-confirmar" type="submit">
-                    Concluir
-                </button>
-
-            </form>
-
-            <form th:action="@{/agenda/cancelar/{id}(id=${agendamento.id})}"
-                  method="post"
-                  onsubmit="return confirmarCancelamento()">
-
-                <input type="hidden"
-                       name="data"
-                       th:value="${dataSelecionada}">
-
-                <button class="btn-cancelar" type="submit">
-                    Cancelar
-                </button>
-
-            </form>
+            </div>
 
         </div>
 
-    </div>
+        <div class="espaco-cabecalho"></div>
 
-    <a href="/dashboard" class="btn-voltar">
-        Voltar ao Painel
-    </a>
+    </header>
 
-</div>
+    <section class="conteudo-agenda">
+
+        <div class="apresentacao-agenda">
+
+            <span class="titulo-secundario-agenda">
+                Atendimentos
+            </span>
+
+            <h1>Agenda do dia</h1>
+
+            <p>
+                Consulte e gerencie os atendimentos de uma data específica.
+            </p>
+
+        </div>
+
+        <div th:if="${sucesso}"
+             class="mensagem-agenda mensagem-sucesso-agenda">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span th:text="${sucesso}"></span>
+
+        </div>
+
+        <form th:action="@{/agenda}"
+              method="get"
+              class="form-filtro-agenda">
+
+            <div class="campo-data-agenda">
+
+                <label for="data">
+                    Selecione uma data
+                </label>
+
+                <div class="input-data-agenda">
+
+                    <i class="bi bi-calendar-event"></i>
+
+                    <input
+                            type="date"
+                            id="data"
+                            name="data"
+                            th:value="${dataSelecionada}"
+                            required>
+
+                </div>
+
+            </div>
+
+            <button type="submit"
+                    class="btn-buscar-agenda">
+
+                <i class="bi bi-search"></i>
+
+                Buscar
+
+            </button>
+
+        </form>
+
+        <section class="resumo-data-agenda">
+
+            <div class="resumo-data-icone">
+                <i class="bi bi-calendar3"></i>
+            </div>
+
+            <div>
+
+                <span>Data selecionada</span>
+
+                <strong th:text="${#temporals.format(dataSelecionada, 'dd/MM/yyyy')}">
+                    30/07/2026
+                </strong>
+
+            </div>
+
+            <div class="quantidade-agenda">
+
+                <span th:text="${#lists.size(agendamentos)}">
+                    0
+                </span>
+
+                <small th:text="${#lists.size(agendamentos) == 1 ? 'atendimento' : 'atendimentos'}">
+                    atendimentos
+                </small>
+
+            </div>
+
+        </section>
+
+        <div th:if="${agendamentos.isEmpty()}"
+             class="agenda-vazia">
+
+            <div class="agenda-vazia-icone">
+                <i class="bi bi-calendar-x"></i>
+            </div>
+
+            <h2>Nenhum agendamento</h2>
+
+            <p>
+                Não há atendimentos cadastrados para a data selecionada.
+            </p>
+
+        </div>
+
+        <section th:if="${!agendamentos.isEmpty()}"
+                 class="lista-agenda">
+
+            <article th:each="agendamento : ${agendamentos}"
+                     class="card-agenda">
+
+                <div class="topo-card-agenda">
+
+                    <div class="horario-card-agenda">
+
+                        <i class="bi bi-clock"></i>
+
+                        <strong th:text="${#temporals.format(agendamento.data, 'HH:mm')}">
+                            08:00
+                        </strong>
+
+                    </div>
+
+                    <span
+                            class="status-card-agenda"
+                            th:text="${agendamento.status}"
+                            th:classappend="${agendamento.status == 'AGENDADO'} ? ' status-agendado-agenda' :
+                            (${agendamento.status == 'CONCLUIDO'} ? ' status-concluido-agenda' : ' status-cancelado-agenda')">
+
+                        AGENDADO
+
+                    </span>
+
+                </div>
+
+                <div class="cliente-card-agenda">
+
+                    <div class="cliente-agenda-icone">
+                        <i class="bi bi-person"></i>
+                    </div>
+
+                    <div>
+
+                        <span>Cliente</span>
+
+                        <h2 th:text="${agendamento.cliente.nome}">
+                            Nome do cliente
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <div class="informacoes-card-agenda">
+
+                    <div class="informacao-agenda">
+
+                        <div class="informacao-agenda-icone">
+                            <i class="bi bi-flower1"></i>
+                        </div>
+
+                        <div>
+
+                            <span>Serviço</span>
+
+                            <strong th:text="${agendamento.servico.nomeServico}">
+                                Massagem
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <div class="informacao-agenda">
+
+                        <div class="informacao-agenda-icone">
+                            <i class="bi bi-calendar-event"></i>
+                        </div>
+
+                        <div>
+
+                            <span>Data</span>
+
+                            <strong th:text="${#temporals.format(agendamento.data, 'dd/MM/yyyy')}">
+                                30/07/2026
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="acoes-agenda"
+                     th:if="${agendamento.status == 'AGENDADO'}">
+
+                    <a th:href="@{/editar/{id}(id=${agendamento.id})}"
+                       class="btn-acao-agenda btn-editar-agenda">
+
+                        <i class="bi bi-pencil"></i>
+
+                        Editar
+
+                    </a>
+
+                    <form th:action="@{/concluir/{id}(id=${agendamento.id})}"
+                          method="post"
+                          class="form-acao-agenda">
+
+                        <button class="btn-acao-agenda btn-concluir-agenda"
+                                type="submit">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            Concluir
+
+                        </button>
+
+                    </form>
+
+                    <form th:action="@{/agenda/cancelar/{id}(id=${agendamento.id})}"
+                          method="post"
+                          class="form-acao-agenda"
+                          onsubmit="return confirmarCancelamento()">
+
+                        <input
+                                type="hidden"
+                                name="data"
+                                th:value="${dataSelecionada}">
+
+                        <button class="btn-acao-agenda btn-cancelar-agenda"
+                                type="submit">
+
+                            <i class="bi bi-x-circle"></i>
+
+                            Cancelar
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div th:if="${agendamento.status != 'AGENDADO'}"
+                     class="atendimento-finalizado">
+
+                    <i th:class="${agendamento.status == 'CONCLUIDO'}
+                                ? 'bi bi-check-circle-fill'
+                                : 'bi bi-x-circle-fill'">
+                    </i>
+
+                    <span th:text="${agendamento.status == 'CONCLUIDO'}
+                                   ? 'Atendimento concluído'
+                                   : 'Atendimento cancelado'">
+                    </span>
+
+                </div>
+
+            </article>
+
+        </section>
+
+    </section>
+
+    <nav class="navegacao-dashboard">
+
+        <a th:href="@{/dashboard}"
+           class="item-navegacao-dashboard">
+
+            <i class="bi bi-house-door"></i>
+
+            <span>Início</span>
+
+        </a>
+
+        <a th:href="@{/agenda}"
+           class="item-navegacao-dashboard ativo">
+
+            <i class="bi bi-calendar-check"></i>
+
+            <span>Agenda</span>
+
+        </a>
+
+        <a th:href="@{/clientes}"
+           class="item-navegacao-dashboard">
+
+            <i class="bi bi-people"></i>
+
+            <span>Clientes</span>
+
+        </a>
+
+        <a th:href="@{/servicos}"
+           class="item-navegacao-dashboard">
+
+            <i class="bi bi-flower1"></i>
+
+            <span>Serviços</span>
+
+        </a>
+
+    </nav>
+
+</main>
 
 <script>
 
     function confirmarCancelamento() {
-        return confirm("Tem certeza que deseja cancelar este atendimento?");
+
+        return confirm(
+            "Tem certeza que deseja cancelar este atendimento?"
+        );
+
     }
+
+</script>
+
+<script>
+
+    setTimeout(() => {
+
+        const mensagens = document.querySelectorAll(
+            ".pagina-agenda .mensagem-agenda"
+        );
+
+        mensagens.forEach(mensagem => {
+
+            mensagem.classList.add("mensagem-agenda-escondendo");
+
+            setTimeout(() => {
+                mensagem.remove();
+            }, 500);
+
+        });
+
+    }, 3000);
 
 </script>
 

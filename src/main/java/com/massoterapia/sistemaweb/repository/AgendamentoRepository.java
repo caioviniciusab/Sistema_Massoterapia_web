@@ -35,4 +35,8 @@ public interface AgendamentoRepository extends JpaRepository<Agendamentos, Integ
     );
 
     List<Agendamentos> findByCliente(Cliente cliente);
+
+    long countByStatusAndDataBetween(String status,
+                                     LocalDateTime inicio,
+                                     LocalDateTime fim);
 }
