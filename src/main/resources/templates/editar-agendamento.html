@@ -1,150 +1,276 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Editar Agendamento</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/editar-agendamento.css}">
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
 
-<div class="container">
+<main class="pagina-editar-agendamento">
 
-    <div class="card">
+    <header class="cabecalho-editar">
 
-        <h2>Editar Agendamento</h2>
+        <a th:href="@{/agenda}"
+           class="botao-voltar-editar"
+           aria-label="Voltar para a agenda">
 
-        <form th:action="@{/editar}" method="post">
+            <i class="bi bi-chevron-left"></i>
+
+        </a>
+
+        <div class="marca-editar">
+
+            <div class="marca-editar-icone">
+                <i class="bi bi-pencil-square"></i>
+            </div>
+
+            <div class="marca-editar-texto">
+
+                <strong>Editar agendamento</strong>
+
+                <span>Atualização do atendimento</span>
+
+            </div>
+
+        </div>
+
+        <div class="espaco-cabecalho-editar"></div>
+
+    </header>
+
+    <section class="conteudo-editar">
+
+        <div class="apresentacao-editar">
+
+            <span>Agendamento</span>
+
+            <h1>Editar atendimento</h1>
+
+            <p>
+                Atualize os dados do cliente, serviço, data ou horário.
+            </p>
+
+        </div>
+
+        <form th:action="@{/editar}"
+              method="post"
+              class="form-editar-agendamento">
 
             <input type="hidden"
                    name="id"
                    th:value="${agendamento.id}">
 
-            <!-- Nome -->
+            <section class="card-formulario-editar">
 
-            <div class="campo">
+                <div class="titulo-card-editar">
 
-                <label>Nome</label>
+                    <div class="titulo-card-editar-icone">
+                        <i class="bi bi-person"></i>
+                    </div>
 
-                <div class="input-icon">
+                    <div>
 
-                    <i class="bi bi-person"></i>
+                        <span>Informações pessoais</span>
 
-                    <input type="text"
-                           name="nome"
-                           th:value="${agendamento.cliente.nome}"
-                           required>
+                        <h2>Dados do cliente</h2>
 
-                </div>
-
-            </div>
-
-            <!-- Telefone -->
-
-            <div class="campo">
-
-                <label>Telefone</label>
-
-                <div class="input-icon">
-
-                    <i class="bi bi-telephone"></i>
-
-                    <input type="text"
-                           name="telefone"
-                           th:value="${agendamento.cliente.telefone}"
-                           required>
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="campo-editar">
 
-            <!-- Serviço -->
+                    <label for="nome">
+                        Nome
+                    </label>
 
-            <div class="campo">
+                    <div class="input-editar">
 
-                <label>Serviço</label>
+                        <i class="bi bi-person"></i>
 
-                <div class="input-icon">
+                        <input type="text"
+                               id="nome"
+                               name="nome"
+                               th:value="${agendamento.cliente.nome}"
+                               placeholder="Nome do cliente"
+                               required>
 
-                    <i class="bi bi-flower1"></i>
-
-                    <select name="servicoId" required>
-
-                        <option
-                                th:each="servico : ${servicos}"
-                                th:value="${servico.id}"
-                                th:text="${servico.nomeServico}"
-                                th:selected="${servico.id == agendamento.servico.id}">
-                        </option>
-
-                    </select>
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="campo-editar">
 
-            <!-- Data -->
+                    <label for="telefone">
+                        Telefone
+                    </label>
 
-            <div class="campo">
+                    <div class="input-editar">
 
-                <label>Data</label>
+                        <i class="bi bi-telephone"></i>
 
-                <div class="input-icon">
+                        <input type="text"
+                               id="telefone"
+                               name="telefone"
+                               th:value="${agendamento.cliente.telefone}"
+                               placeholder="Telefone do cliente"
+                               required>
 
-                    <i class="bi bi-calendar-event"></i>
-
-                    <input type="date"
-                           name="data"
-                           th:value="${#temporals.format(agendamento.data,'yyyy-MM-dd')}"
-                           required>
-
-                </div>
-
-            </div>
-
-            <!-- Horário -->
-
-            <div class="campo">
-
-                <label>Horário</label>
-
-                <div class="input-icon">
-
-                    <i class="bi bi-clock"></i>
-
-                    <input type="time"
-                           name="horario"
-                           th:value="${#temporals.format(agendamento.data,'HH:mm')}"
-                           required>
+                    </div>
 
                 </div>
 
-            </div>
+            </section>
 
-            <div class="botoes">
+            <section class="card-formulario-editar">
 
-                <button type="submit" class="btn">
+                <div class="titulo-card-editar">
+
+                    <div class="titulo-card-editar-icone">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+
+                    <div>
+
+                        <span>Atendimento</span>
+
+                        <h2>Serviço e horário</h2>
+
+                    </div>
+
+                </div>
+
+                <div class="campo-editar">
+
+                    <label for="servicoId">
+                        Serviço
+                    </label>
+
+                    <div class="input-editar">
+
+                        <i class="bi bi-flower1"></i>
+
+                        <select id="servicoId"
+                                name="servicoId"
+                                required>
+
+                            <option
+                                    th:each="servico : ${servicos}"
+                                    th:value="${servico.id}"
+                                    th:text="${servico.nomeServico}"
+                                    th:selected="${servico.id == agendamento.servico.id}">
+                            </option>
+
+                        </select>
+
+                        <i class="bi bi-chevron-down seta-select-editar"></i>
+
+                    </div>
+
+                </div>
+
+                <div class="linha-data-horario">
+
+                    <div class="campo-editar">
+
+                        <label for="data">
+                            Data
+                        </label>
+
+                        <div class="input-editar">
+
+                            <i class="bi bi-calendar-event"></i>
+
+                            <input type="date"
+                                   id="data"
+                                   name="data"
+                                   th:value="${#temporals.format(agendamento.data, 'yyyy-MM-dd')}"
+                                   required>
+
+                        </div>
+
+                    </div>
+
+                    <div class="campo-editar">
+
+                        <label for="horario">
+                            Horário
+                        </label>
+
+                        <div class="input-editar">
+
+                            <i class="bi bi-clock"></i>
+
+                            <input type="time"
+                                   id="horario"
+                                   name="horario"
+                                   th:value="${#temporals.format(agendamento.data, 'HH:mm')}"
+                                   required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <aside class="aviso-editar">
+
+                <div class="aviso-editar-icone">
+                    <i class="bi bi-info-circle"></i>
+                </div>
+
+                <p>
+                    Confira os dados antes de salvar as alterações.
+                </p>
+
+            </aside>
+
+            <div class="botoes-editar">
+
+                <button type="submit"
+                        class="btn-salvar-editar">
+
                     <i class="bi bi-check-circle"></i>
-                    Salvar Alterações
+
+                    Salvar alterações
+
                 </button>
 
-                <a th:href="@{/agenda}" class="btn-voltar">
-                    <i class="bi bi-arrow-left"></i>
+                <a th:href="@{/agenda}"
+                   class="btn-cancelar-editar">
+
+                    <i class="bi bi-x-circle"></i>
+
                     Cancelar
+
                 </a>
 
             </div>
 
         </form>
 
-    </div>
+    </section>
 
-</div>
+</main>
 
 </body>
 

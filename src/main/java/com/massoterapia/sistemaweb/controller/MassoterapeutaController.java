@@ -171,6 +171,7 @@ public class MassoterapeutaController {
     @PostMapping("/concluir/{id}")
     public String concluir(
             @PathVariable Integer id,
+            @RequestParam LocalDate data,
             RedirectAttributes attributes
     ) {
 
@@ -181,7 +182,7 @@ public class MassoterapeutaController {
                 "Atendimento concluído com sucesso!"
         );
 
-        return "redirect:/agenda";
+        return "redirect:/agenda?data=" + data;
 
     }
 }
