@@ -1,5 +1,6 @@
 package com.massoterapia.sistemaweb.controller;
 
+import com.massoterapia.sistemaweb.exception.AgendamentoException;
 import com.massoterapia.sistemaweb.model.Servico;
 import com.massoterapia.sistemaweb.service.ServicoService;
 import jakarta.servlet.http.HttpSession;
@@ -43,15 +44,27 @@ public class ServicoController {
     public String salvarServico(
             @RequestParam String nomeServico,
             RedirectAttributes attributes
-    ){
-        Servico servico = new Servico();
+    ) {
 
-        servico.setNomeServico(nomeServico);
+        try {
 
-        servicoService.salvar(servico);
+            servicoService.salvar(nomeServico);
 
-        attributes.addFlashAttribute("sucesso", "servico cadastrado com sucesso");
+            attributes.addFlashAttribute(
+                    "sucesso",
+                    "Serviço cadastrado com sucesso."
+            );
 
-        return "redirect:/servicos";
+            return "redirect:/servicos";
+
+        } catch (AgendamentoException e) {
+
+            attributes.addFlashAttribute(
+                    "erro",
+                    e.getMessage()
+            );
+
+            return "redirect:/servicos/novo";
+        }
     }
 }

@@ -5,9 +5,16 @@
 
     <meta charset="UTF-8">
 
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Novo Serviço</title>
 
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/novo-servico.css}">
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -16,50 +23,160 @@
 
 <body>
 
-<div class="container">
+<main class="pagina-novo-servico">
 
-    <div class="card">
+    <header class="cabecalho-novo-servico">
 
-        <h1>Novo Serviço</h1>
+        <a th:href="@{/servicos}"
+           class="botao-voltar-servico"
+           aria-label="Voltar">
 
-        <form th:action="@{/servicos/salvar}" method="post">
+            <i class="bi bi-chevron-left"></i>
 
-            <div class="campo">
+        </a>
 
-                <label>Nome do Serviço</label>
+        <div class="marca-servico">
 
-                <div class="input-icon">
+            <div class="icone-marca-servico">
 
-                    <i class="bi bi-flower1"></i>
+                <i class="bi bi-flower1"></i>
 
-                    <input
-                            type="text"
-                            name="nomeServico"
-                            placeholder="Ex.: Massagem Relaxante"
-                            required>
+            </div>
+
+            <div class="texto-marca-servico">
+
+                <strong>Novo Serviço</strong>
+
+                <span>Cadastro</span>
+
+            </div>
+
+        </div>
+
+        <div class="espaco"></div>
+
+    </header>
+
+    <section class="conteudo-novo-servico">
+
+        <div class="cabecalho-formulario">
+
+            <span>Novo cadastro</span>
+
+            <h1>Cadastrar serviço</h1>
+
+            <p>
+                Informe o nome do serviço que ficará disponível para agendamento.
+            </p>
+
+        </div>
+
+        <!-- Mensagem de sucesso -->
+        <div th:if="${sucesso}" class="mensagem-sucesso">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span th:text="${sucesso}"></span>
+
+        </div>
+
+        <!-- Mensagem de erro -->
+        <div th:if="${erro}" class="mensagem-erro">
+
+            <i class="bi bi-exclamation-circle-fill"></i>
+
+            <span th:text="${erro}"></span>
+
+        </div>
+
+        <form th:action="@{/servicos/salvar}"
+              method="post">
+
+            <div class="card-formulario">
+
+                <div class="campo">
+
+                    <label for="nomeServico">
+                        Nome do serviço
+                    </label>
+
+                    <div class="input-servico">
+
+                        <i class="bi bi-flower1"></i>
+
+                        <input
+                                id="nomeServico"
+                                type="text"
+                                name="nomeServico"
+                                placeholder="Ex.: Massagem Relaxante"
+                                autocomplete="off"
+                                required>
+
+                    </div>
 
                 </div>
 
             </div>
 
-            <div class="botoes">
+            <div class="card-aviso-servico">
 
-                <button type="submit" class="btn">
+                <i class="bi bi-lightbulb"></i>
+
+                <span>
+                    Utilize um nome claro e objetivo para facilitar a escolha do cliente.
+                </span>
+
+            </div>
+
+            <div class="botoes-servico">
+
+                <button type="submit"
+                        class="btn-salvar-servico">
+
                     <i class="bi bi-check-circle"></i>
-                    Salvar
+
+                    Salvar serviço
+
                 </button>
 
-                <a th:href="@{/servicos}" class="btn-voltar">
+                <a th:href="@{/servicos}"
+                   class="btn-cancelar-servico">
+
+                    <i class="bi bi-x-circle"></i>
+
                     Cancelar
+
                 </a>
 
             </div>
 
         </form>
 
-    </div>
+    </section>
 
-</div>
+</main>
+
+<script>
+
+    setTimeout(() => {
+
+        const mensagens = document.querySelectorAll(
+            ".mensagem-sucesso, .mensagem-erro"
+        );
+
+        mensagens.forEach(mensagem => {
+
+            mensagem.style.opacity = "0";
+
+            setTimeout(() => {
+                mensagem.remove();
+            }, 500);
+
+        });
+
+    }, 3000);
+
+</script>
 
 </body>
 

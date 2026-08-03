@@ -11,4 +11,6 @@ public interface ServicoRepository
     Servico findByNomeservico(String nomeservico);
 
     Optional<Servico> findById(int id);
+
+    boolean existsByNomeservicoIgnoreCase(String nomeservico);
 }
