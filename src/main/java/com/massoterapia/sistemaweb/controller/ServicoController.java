@@ -1,13 +1,13 @@
 package com.massoterapia.sistemaweb.controller;
 
 import com.massoterapia.sistemaweb.exception.AgendamentoException;
-import com.massoterapia.sistemaweb.model.Servico;
 import com.massoterapia.sistemaweb.service.ServicoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,6 +28,14 @@ public class ServicoController {
         model.addAttribute("servicos", servicoService.listarTodos());
 
         return "servicos";
+    }
+
+    @GetMapping("/servicos/editar/{id}")
+    public String abrirEdicao(@PathVariable Integer id, Model model)
+    {
+        model.addAttribute("servico", servicoService.buscarPorId(id));
+
+        return "editar-servico";
     }
 
     @GetMapping("/servicos/novo")
@@ -65,6 +73,27 @@ public class ServicoController {
             );
 
             return "redirect:/servicos/novo";
+        }
+    }
+
+    @PostMapping("/servicos/editar")
+    public String editarServico(
+            @RequestParam Integer id,
+            @RequestParam String nomeServico,
+            RedirectAttributes attributes
+    ){
+
+        try{
+            servicoService.editarServico(id, nomeServico);
+
+            attributes.addFlashAttribute("sucesso", "Serviço atualizado com sucesso.");
+
+            return "redirect:/servicos";
+        }catch(AgendamentoException e){
+
+            attributes.addFlashAttribute("erro",e.getMessage());
+
+            return "redirect:/servicos/editar/" + id;
         }
     }
 }

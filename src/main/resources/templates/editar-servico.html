@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Serviço</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/editar-servico.css}">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+<main class="pagina-editar-servico">
+
+    <header class="cabecalho-editar-servico">
+
+        <a th:href="@{/servicos}"
+           class="botao-voltar-editar-servico"
+           aria-label="Voltar para serviços">
+
+            <i class="bi bi-chevron-left"></i>
+
+        </a>
+
+        <div class="marca-editar-servico">
+
+            <div class="icone-marca-editar-servico">
+
+                <i class="bi bi-pencil-square"></i>
+
+            </div>
+
+            <div class="texto-marca-editar-servico">
+
+                <strong>Editar serviço</strong>
+
+                <span>Atualização</span>
+
+            </div>
+
+        </div>
+
+        <div class="espaco-editar-servico"></div>
+
+    </header>
+
+    <section class="conteudo-editar-servico">
+
+        <div class="cabecalho-formulario-editar-servico">
+
+            <span>Serviço cadastrado</span>
+
+            <h1>Editar serviço</h1>
+
+            <p>
+                Atualize o nome do serviço disponível para agendamento.
+            </p>
+
+        </div>
+
+        <div th:if="${sucesso}"
+             class="mensagem-sucesso">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span th:text="${sucesso}"></span>
+
+        </div>
+
+        <div th:if="${erro}"
+             class="mensagem-erro">
+
+            <i class="bi bi-exclamation-circle-fill"></i>
+
+            <span th:text="${erro}"></span>
+
+        </div>
+
+        <form th:action="@{/servicos/editar}"
+              method="post">
+
+            <input
+                    type="hidden"
+                    name="id"
+                    th:value="${servico.id}">
+
+            <div class="card-editar-servico">
+
+                <div class="campo-editar-servico">
+
+                    <label for="nomeServico">
+                        Nome do serviço
+                    </label>
+
+                    <div class="input-editar-servico">
+
+                        <i class="bi bi-flower1"></i>
+
+                        <input
+                                id="nomeServico"
+                                type="text"
+                                name="nomeServico"
+                                th:value="${servico.nomeServico}"
+                                placeholder="Digite o nome do serviço"
+                                autocomplete="off"
+                                required>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <aside class="aviso-editar-servico">
+
+                <i class="bi bi-info-circle"></i>
+
+                <span>
+                    A alteração será exibida nos próximos agendamentos.
+                </span>
+
+            </aside>
+
+            <div class="botoes-editar-servico">
+
+                <button type="submit"
+                        class="btn-salvar-edicao-servico">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Salvar alterações
+
+                </button>
+
+                <a th:href="@{/servicos}"
+                   class="btn-cancelar-edicao-servico">
+
+                    <i class="bi bi-x-circle"></i>
+
+                    Cancelar
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+<script>
+
+    setTimeout(() => {
+
+        const mensagens = document.querySelectorAll(
+            ".mensagem-sucesso, .mensagem-erro"
+        );
+
+        mensagens.forEach(mensagem => {
+
+            mensagem.style.opacity = "0";
+
+            setTimeout(() => {
+                mensagem.remove();
+            }, 500);
+
+        });
+
+    }, 3000);
+
+</script>
+
+</body>
+
+</html>

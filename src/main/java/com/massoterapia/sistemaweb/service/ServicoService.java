@@ -42,4 +42,30 @@ public class ServicoService {
         servicoRepository.save(servico);
     }
 
+    public void editarServico(Integer id, String nomeServico) {
+
+        Servico servico = servicoRepository.findById(id).orElseThrow(() -> new AgendamentoException("Serviço não encontrado."));
+
+        String nomeTratado = nomeServico.trim();
+
+        if(nomeTratado.isBlank()){
+            throw new AgendamentoException("O nome do serviço é obrigatório.");
+        }
+
+        servico.setNomeServico(nomeTratado);
+
+        servicoRepository.save(servico);
+    }
+
+
+    public Servico buscarPorId(Integer id) {
+
+        return servicoRepository.findById(id)
+                .orElseThrow(() ->
+                        new AgendamentoException(
+                                "Serviço não encontrado."
+                        )
+                );
+    }
+
 }
