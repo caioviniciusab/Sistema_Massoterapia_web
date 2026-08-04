@@ -3,6 +3,7 @@ package com.massoterapia.sistemaweb.repository;
 import com.massoterapia.sistemaweb.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ClienteRepository
@@ -14,4 +15,8 @@ public interface ClienteRepository
             String nome,
             String telefone
     );
+
+    List<Cliente> findByNomeContainingIgnoreCase(String nome);
+
+    List<Cliente> findByTelefoneContaining(String telefone);
 }

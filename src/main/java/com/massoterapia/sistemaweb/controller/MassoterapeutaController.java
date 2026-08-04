@@ -1,6 +1,7 @@
 package com.massoterapia.sistemaweb.controller;
 
 import com.massoterapia.sistemaweb.service.AgendamentoService;
+import com.massoterapia.sistemaweb.service.ClienteService;
 import com.massoterapia.sistemaweb.service.MassoterapeutaService;
 import com.massoterapia.sistemaweb.service.ServicoService;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +21,9 @@ public class MassoterapeutaController {
 
     @Autowired
     private ServicoService servicoService;
+
+    @Autowired
+    private ClienteService clienteService;
 
     @Autowired
     private MassoterapeutaService massoterapeutaService;
@@ -60,6 +64,27 @@ public class MassoterapeutaController {
         session.invalidate();
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/clientes")
+    public String clientes(
+            @RequestParam(required = false) String busca,
+            HttpSession session,
+            Model model
+    ) {
+
+        if (session.getAttribute("usuarioLogado") == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("busca", busca);
+
+        model.addAttribute(
+                "clientes",
+                clienteService.pesquisar(busca)
+        );
+
+        return "clientes";
     }
 
     @GetMapping("/editar/{id}")
