@@ -72,6 +72,18 @@ public class ServicoService {
         servicoRepository.save(servico);
     }
 
+    public void excluirServico(Integer id) {
+
+        Servico servico = servicoRepository.findById(id)
+                .orElseThrow(() ->
+                        new AgendamentoException(
+                                "Serviço não encontrado."
+                        )
+                );
+
+        servicoRepository.delete(servico);
+    }
+
 
     public Servico buscarPorId(Integer id) {
 

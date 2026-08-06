@@ -81,6 +81,24 @@
 
         </div>
 
+        <div th:if="${sucesso}"
+             class="mensagem mensagem-sucesso">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span th:text="${sucesso}"></span>
+
+        </div>
+
+        <div th:if="${erro}"
+             class="mensagem mensagem-erro">
+
+            <i class="bi bi-exclamation-circle-fill"></i>
+
+            <span th:text="${erro}"></span>
+
+        </div>
+
         <section class="resumo-servicos">
 
             <div class="resumo-servicos-icone">
@@ -179,15 +197,21 @@
 
                     </a>
 
-                    <a th:href="@{'/servicos/excluir/' + ${servico.id}}"
-                       class="btn-acao-servico btn-excluir-servico"
-                       onclick="return confirmarExclusao()">
+                    <form th:action="@{/servicos/excluir/{id}(id=${servico.id})}"
+                          method="post"
+                          class="form-excluir-servico"
+                          onsubmit="return confirmarExclusao()">
 
-                        <i class="bi bi-trash"></i>
+                        <button type="submit"
+                                class="btn-acao-servico btn-excluir-servico">
 
-                        Excluir
+                            <i class="bi bi-trash"></i>
 
-                    </a>
+                            Excluir
+
+                        </button>
+
+                    </form>
 
                 </div>
 
@@ -248,6 +272,28 @@
         );
 
     }
+
+</script>
+
+<script>
+
+    setTimeout(() => {
+
+        const mensagens = document.querySelectorAll(
+            ".mensagem-sucesso, .mensagem-erro"
+        );
+
+        mensagens.forEach(mensagem => {
+
+            mensagem.style.opacity = "0";
+
+            setTimeout(() => {
+                mensagem.remove();
+            }, 500);
+
+        });
+
+    }, 3000);
 
 </script>
 

@@ -101,4 +101,30 @@ public class ServicoController {
             return "redirect:/servicos/editar/" + id;
         }
     }
+
+    @PostMapping("/servicos/excluir/{id}")
+    public String excluirServico(
+            @PathVariable Integer id,
+            RedirectAttributes attributes
+    ) {
+
+        try {
+
+            servicoService.excluirServico(id);
+
+            attributes.addFlashAttribute(
+                    "sucesso",
+                    "Serviço excluído com sucesso."
+            );
+
+        } catch (AgendamentoException e) {
+
+            attributes.addFlashAttribute(
+                    "erro",
+                    e.getMessage()
+            );
+        }
+
+        return "redirect:/servicos";
+    }
 }
