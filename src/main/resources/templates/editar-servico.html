@@ -122,6 +122,30 @@
 
                 </div>
 
+                <div class="campo-editar-servico campo-preco-servico">
+
+                    <label for="preco">
+                        Preço
+                    </label>
+
+                    <div class="input-editar-servico">
+
+                        <i class="bi bi-cash-stack"></i>
+
+                        <input
+                                id="preco"
+                                type="number"
+                                name="preco"
+                                th:value="${servico.preco}"
+                                placeholder="Ex.: 80.00"
+                                min="0.01"
+                                step="0.01"
+                                required>
+
+                    </div>
+
+                </div>
+
             </div>
 
             <aside class="aviso-editar-servico">

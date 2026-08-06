@@ -143,6 +143,27 @@
                             Nome do serviço
                         </h2>
 
+                        <div class="preco-servico">
+
+                            <i class="bi bi-cash-stack"></i>
+
+                            <strong
+                                    th:text="${servico.preco != null
+                ? 'R$ ' + #numbers.formatDecimal(
+                    servico.preco,
+                    1,
+                    'POINT',
+                    2,
+                    'COMMA'
+                )
+                : 'Preço não informado'}">
+
+                                R$ 0,00
+
+                            </strong>
+
+                        </div>
+
                     </div>
 
                 </div>

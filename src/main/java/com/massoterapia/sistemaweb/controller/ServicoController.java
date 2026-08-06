@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
+
 @Controller
 public class ServicoController {
 
@@ -51,12 +53,13 @@ public class ServicoController {
     @PostMapping("/servicos/salvar")
     public String salvarServico(
             @RequestParam String nomeServico,
+            @RequestParam BigDecimal preco,
             RedirectAttributes attributes
     ) {
 
         try {
 
-            servicoService.salvar(nomeServico);
+            servicoService.salvar(nomeServico, preco);
 
             attributes.addFlashAttribute(
                     "sucesso",
@@ -80,15 +83,17 @@ public class ServicoController {
     public String editarServico(
             @RequestParam Integer id,
             @RequestParam String nomeServico,
+            @RequestParam BigDecimal preco,
             RedirectAttributes attributes
     ){
 
         try{
-            servicoService.editarServico(id, nomeServico);
+            servicoService.editarServico(id, nomeServico, preco);
 
             attributes.addFlashAttribute("sucesso", "Serviço atualizado com sucesso.");
 
             return "redirect:/servicos";
+
         }catch(AgendamentoException e){
 
             attributes.addFlashAttribute("erro",e.getMessage());

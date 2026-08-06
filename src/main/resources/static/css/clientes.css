@@ -256,16 +256,17 @@ body {
 }
 
 .btn-pesquisar-clientes {
-    min-width: 120px;
+    width: 92px;
+    min-width: 92px;
     height: 52px;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 
     margin: 0 !important;
-    padding: 0 18px;
+    padding: 0 10px;
 
     color: #ffffff !important;
 
@@ -280,7 +281,7 @@ body {
     border-radius: 12px !important;
 
     font-family: inherit;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
 
     cursor: pointer;

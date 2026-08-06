@@ -6,6 +6,7 @@ import com.massoterapia.sistemaweb.repository.ServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -25,9 +26,15 @@ public class ServicoService {
     }
 
 
-    public void salvar(String nomeServico) {
+    public void salvar(String nomeServico, BigDecimal preco) {
 
         String nomeTratado = nomeServico.trim();
+
+        if (preco == null || preco.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new AgendamentoException(
+                    "O preço deve ser maior que zero."
+            );
+        }
 
         if (servicoRepository.existsByNomeservicoIgnoreCase(nomeTratado)) {
             throw new AgendamentoException(
@@ -38,11 +45,12 @@ public class ServicoService {
         Servico servico = new Servico();
 
         servico.setNomeServico(nomeTratado);
+        servico.setPreco(preco);
 
         servicoRepository.save(servico);
     }
 
-    public void editarServico(Integer id, String nomeServico) {
+    public void editarServico(Integer id, String nomeServico,  BigDecimal preco) {
 
         Servico servico = servicoRepository.findById(id).orElseThrow(() -> new AgendamentoException("Serviço não encontrado."));
 
@@ -52,7 +60,14 @@ public class ServicoService {
             throw new AgendamentoException("O nome do serviço é obrigatório.");
         }
 
+        if (preco == null || preco.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new AgendamentoException(
+                    "O preço deve ser maior que zero."
+            );
+        }
+
         servico.setNomeServico(nomeTratado);
+        servico.setPreco(preco);
 
         servicoRepository.save(servico);
     }

@@ -3,6 +3,7 @@ package com.massoterapia.sistemaweb.controller;
 import com.massoterapia.sistemaweb.exception.AgendamentoException;
 import com.massoterapia.sistemaweb.model.Agendamentos;
 import com.massoterapia.sistemaweb.service.AgendamentoService;
+import com.massoterapia.sistemaweb.service.ServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,14 @@ public class AgendamentoController {
     @Autowired
     private AgendamentoService agendamentoService;
 
+    @Autowired
+    private ServicoService servicoService;
+
     @GetMapping("/agendar")
-    public String agendar() {
+    public String agendar(Model model) {
+
+        model.addAttribute("servicos", servicoService.listarTodos());
+
         return "agendar";
     }
 

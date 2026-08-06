@@ -146,17 +146,22 @@
                             Selecione o tipo de massagem
                         </option>
 
-                        <option>Massagem Facial</option>
-                        <option>Massagem Relaxante Completa</option>
-                        <option>Massagem Relaxante Com Vela</option>
-                        <option>Massagem Relaxante Com Pedras Quentes</option>
-                        <option>Massagem Relaxante Com Bambús</option>
-                        <option>Ventosaterapia</option>
-                        <option>Escalda Pés</option>
-                        <option>Drenagem Linfática Facial</option>
-                        <option>Drenagem Linfática Corporal</option>
-                        <option>Detox</option>
-                        <option>Manta Térmica</option>
+                        <option
+                                th:each="servico : ${servicos}"
+                                th:value="${servico.nomeServico}"
+                                th:text="${servico.preco != null
+                                    ? servico.nomeServico
+                                    + ' — R$ '
+                                    + #numbers.formatDecimal(
+                                    servico.preco,
+                                    1,
+                                    'POINT',
+                                    2,
+                                    'COMMA'
+                                )
+                                : servico.nomeServico
+                                + ' — preço não informado'}">
+                        </option>
 
                     </select>
 

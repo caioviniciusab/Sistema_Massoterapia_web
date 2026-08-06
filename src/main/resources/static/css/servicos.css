@@ -646,3 +646,22 @@ body:has(.pagina-servicos) {
     color: var(--rosa-principal) !important;
     background: var(--rosa-claro) !important;
 }
+
+.pagina-servicos .preco-servico {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 7px;
+
+    color: #e73978;
+}
+
+.pagina-servicos .preco-servico i {
+    font-size: 15px;
+}
+
+.pagina-servicos .preco-servico strong {
+    font-size: 14px;
+    font-weight: 800;
+}

@@ -187,6 +187,26 @@
                             Nome do serviço
                         </h3>
 
+                        <div class="preco-agendamento">
+
+                            <i class="bi bi-cash-stack"></i>
+
+                            <strong>Valor:</strong>
+
+                            <span
+                                    th:text="${agendamento.servico.preco != null
+                                    ? 'R$ ' + #numbers.formatDecimal(
+                                    agendamento.servico.preco,
+                                    1,
+                                    'POINT',
+                                    2,
+                                    'COMMA'
+                                )
+                                : 'Preço não informado'}">
+                            </span>
+
+                        </div>
+
                     </div>
 
                     <span
