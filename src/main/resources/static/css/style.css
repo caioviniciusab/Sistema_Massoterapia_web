@@ -4004,3 +4004,105 @@ button {
     color: var(--texto-principal);
 
 }
+
+/* ==================================================
+   CORREÇÃO DA NAVEGAÇÃO DA AGENDA NO COMPUTADOR
+================================================== */
+
+@media (min-width: 700px) {
+
+    .pagina-agenda .navegacao-dashboard {
+        width: calc(100% - 32px);
+        max-width: 620px;
+
+        left: 50%;
+        right: auto;
+        bottom: 18px;
+
+        transform: translateX(-50%);
+
+        padding: 8px;
+
+        border: 1px solid #ede2e7;
+        border-radius: 22px;
+
+        box-shadow: var(--sombra-card);
+    }
+
+    .pagina-agenda .item-navegacao-dashboard {
+        flex: 1;
+        min-width: 0;
+        max-width: 120px;
+    }
+
+}
+
+/* ==================================================
+   PADRONIZA A AGENDA COM O DASHBOARD NO COMPUTADOR
+================================================== */
+
+@media (min-width: 700px) {
+
+    body:has(.pagina-agenda) {
+        padding: 28px 0 110px;
+    }
+
+    .pagina-agenda {
+        max-width: 740px;
+        min-height: auto;
+
+        margin: 0 auto;
+
+        background: transparent;
+    }
+
+    .pagina-agenda .cabecalho-agenda {
+        width: 100%;
+
+        border: 1px solid #f0e3e8;
+        border-radius: 20px;
+
+        position: static;
+
+        box-shadow: var(--sombra-card);
+    }
+
+    .pagina-agenda .conteudo-agenda {
+        padding: 38px 24px;
+    }
+
+}
+
+/* ==================================================
+   CENTRALIZA O DASHBOARD NO COMPUTADOR
+================================================== */
+
+@media (min-width: 700px) {
+
+    body:has(.pagina-dashboard) {
+        padding: 28px 0 110px;
+    }
+
+    .pagina-dashboard {
+        width: calc(100% - 32px);
+        max-width: 680px;
+
+        min-height: auto;
+
+        margin: 0 auto;
+
+        background: transparent;
+    }
+
+    .pagina-dashboard .cabecalho-dashboard {
+        width: 100%;
+
+        border: 1px solid #f0e3e8;
+        border-radius: 20px;
+
+        position: static;
+
+        box-shadow: var(--sombra-card);
+    }
+
+}

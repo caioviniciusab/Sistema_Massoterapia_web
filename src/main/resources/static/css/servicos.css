@@ -336,14 +336,16 @@ body:has(.pagina-servicos) {
 }
 
 .pagina-servicos .btn-acao-servico {
-    min-height: 41px;
+
+    width: 95px;
+    height: 42px;
 
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
 
-    padding: 9px 12px;
+    padding: 0;
 
     border: 1px solid;
     border-radius: 11px;
@@ -352,6 +354,10 @@ body:has(.pagina-servicos) {
 
     font-size: 12px;
     font-weight: 700;
+
+    box-sizing: border-box;
+
+    cursor: pointer;
 
     transition: 0.2s;
 }
@@ -667,12 +673,59 @@ body:has(.pagina-servicos) {
 }
 
 .form-excluir-servico {
+
+    display: flex;
+
     margin: 0;
-    padding: 0;
+
 }
 
 .form-excluir-servico .btn-excluir-servico {
-    width: auto;
-    height: 100%;
+
+    width: 95px;
+    height: 42px;
+
     margin: 0;
+
+}
+
+/* ==================================================
+   SERVIÇOS — PADRÃO MOBILE IGUAL À AGENDA
+================================================== */
+
+@media screen and (max-width: 699px) {
+
+    body:has(.pagina-servicos) {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .pagina-servicos {
+        width: 100% !important;
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .pagina-servicos .cabecalho-servicos {
+        width: 100% !important;
+        max-width: none !important;
+        min-height: 78px;
+
+        margin: 0 !important;
+        padding: 13px 18px;
+
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-bottom: 1px solid #f2e5ea !important;
+        border-radius: 0 !important;
+
+        position: sticky !important;
+        top: 0;
+
+        box-shadow: none !important;
+    }
+
 }
