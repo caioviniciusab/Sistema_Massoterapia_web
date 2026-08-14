@@ -173,8 +173,12 @@ public class MassoterapeutaController {
             @RequestParam Integer servicoId,
             @RequestParam String data,
             @RequestParam String horario,
-            RedirectAttributes attributes
+            RedirectAttributes attributes,
+            HttpSession session
     ){
+        if (session.getAttribute("usuarioLogado") == null) {
+            return "redirect:/login";
+        }
 
         agendamentoService.editarAgendamento(
                 id,
@@ -190,15 +194,19 @@ public class MassoterapeutaController {
                 "Agendamento atualizado com sucesso"
         );
 
-        return "redirect:/agenda";
+        return "redirect:/agenda?data=" + data;
     }
 
     @PostMapping("/concluir/{id}")
     public String concluir(
             @PathVariable Integer id,
             @RequestParam LocalDate data,
-            RedirectAttributes attributes
+            RedirectAttributes attributes,
+            HttpSession session
     ) {
+        if (session.getAttribute("usuarioLogado") == null) {
+            return "redirect:/login";
+        }
 
         agendamentoService.concluirAgendamento(id);
 
