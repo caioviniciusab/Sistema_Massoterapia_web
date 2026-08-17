@@ -21,18 +21,41 @@ public class WhatsAppService {
 
     public void enviarMensagem(String mensagem) {
 
+        System.out.println("Tentando enviar mensagem pelo WhatsApp...");
+
         try {
-            String url = "https://api.callmebot.com/whatsapp.php"
-                    + "?phone=" + numero
-                    + "&text=" + mensagem
-                    + "&apikey=" + apiKey;
 
-            restTemplate.getForObject(url, String.class);
+            String mensagemCodificada =
+                    URLEncoder.encode(
+                            mensagem,
+                            StandardCharsets.UTF_8
+                    );
 
-        }catch (Exception e){
-            System.out.println("Erro ao enviar mensagem para o WhatsApp: " + e.getMessage());
+            String url =
+                    "https://api.callmebot.com/whatsapp.php"
+                            + "?phone=" + numero
+                            + "&text=" + mensagemCodificada
+                            + "&apikey=" + apiKey;
+
+            String resposta =
+                    restTemplate.getForObject(
+                            url,
+                            String.class
+                    );
+
+            System.out.println(
+                    "Resposta CallMeBot: " + resposta
+            );
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "Erro ao enviar mensagem para o WhatsApp: "
+                            + e.getMessage()
+            );
+
+            e.printStackTrace();
         }
-
     }
 
 }
