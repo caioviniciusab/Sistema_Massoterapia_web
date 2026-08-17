@@ -37,6 +37,10 @@ public class WhatsAppService {
                             + "&text=" + mensagemCodificada
                             + "&apikey=" + apiKey;
 
+            System.out.println("Número utilizado: " + numero);
+            System.out.println("API Key carregada: " + (apiKey != null && !apiKey.isBlank()));
+            System.out.println("Chamando API da CallMeBot...");
+
             String resposta =
                     restTemplate.getForObject(
                             url,
