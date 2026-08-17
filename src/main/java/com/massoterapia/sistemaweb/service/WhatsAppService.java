@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -25,31 +26,21 @@ public class WhatsAppService {
 
         try {
 
-            String mensagemCodificada =
-                    URLEncoder.encode(
-                            mensagem,
-                            StandardCharsets.UTF_8
-                    );
-
-            String url =
-                    "https://api.callmebot.com/whatsapp.php"
-                            + "?phone=" + numero
-                            + "&text=" + mensagemCodificada
-                            + "&apikey=" + apiKey;
+            String url = UriComponentsBuilder
+                    .fromHttpUrl("https://api.callmebot.com/whatsapp.php")
+                    .queryParam("phone", numero)
+                    .queryParam("text", mensagem)
+                    .queryParam("apikey", apiKey)
+                    .encode(StandardCharsets.UTF_8)
+                    .toUriString();
 
             System.out.println("Número utilizado: " + numero);
             System.out.println("API Key carregada: " + (apiKey != null && !apiKey.isBlank()));
-            System.out.println("Chamando API da CallMeBot...");
 
             String resposta =
-                    restTemplate.getForObject(
-                            url,
-                            String.class
-                    );
+                    restTemplate.getForObject(url, String.class);
 
-            System.out.println(
-                    "Resposta CallMeBot: " + resposta
-            );
+            System.out.println("Resposta CallMeBot: " + resposta);
 
         } catch (Exception e) {
 
@@ -57,8 +48,6 @@ public class WhatsAppService {
                     "Erro ao enviar mensagem para o WhatsApp: "
                             + e.getMessage()
             );
-
-            e.printStackTrace();
         }
     }
 
