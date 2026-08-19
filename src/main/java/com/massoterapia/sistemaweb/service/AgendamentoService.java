@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +106,9 @@ public class AgendamentoService {
 
     public long quantidadeAgendadosHoje() {
 
-        LocalDate hoje = LocalDate.now();
+        LocalDate hoje = LocalDate.now(
+                ZoneId.of("America/Sao_Paulo")
+        );
 
         LocalDateTime inicio = hoje.atStartOfDay();
 
@@ -185,7 +188,9 @@ public class AgendamentoService {
 
         LocalDateTime datahora = LocalDateTime.of(date, hora);
 
-        LocalDateTime agora = LocalDateTime.now();
+        LocalDateTime agora = LocalDateTime.now(
+                ZoneId.of("America/Sao_Paulo")
+        );
 
         if (datahora.isBefore(agora)) {
             throw new AgendamentoException("A data do agendamento não pode ser anterior a data do atual.");
