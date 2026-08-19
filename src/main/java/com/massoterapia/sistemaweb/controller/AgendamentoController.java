@@ -53,20 +53,22 @@ public class AgendamentoController {
     }
 
     @PostMapping("/cancelar/{id}")
-    public String cancelarAgendamento(@PathVariable Integer id,
-                                      @RequestParam String nome,
-                                      @RequestParam String telefone,
-                                      RedirectAttributes attributes)
+    public String cancelarAgendamento(
+            @PathVariable Integer id,
+            @RequestParam String nome,
+            @RequestParam String telefone,
+            RedirectAttributes attributes
+    )
     {
-
-        System.out.println("Nome: " + nome);
-        System.out.println("Telefone: " + telefone);
 
         agendamentoService.cancelarAgendamento(id);
 
         attributes.addFlashAttribute("sucesso", "Agendamento cancelado com sucesso.");
 
-        return "redirect:/consultar?nome=" + nome + "&telefone=" + telefone;
+        attributes.addAttribute("nome", nome);
+        attributes.addAttribute("telefone", telefone);
+
+        return "redirect:/consultar";
 
     }
 
