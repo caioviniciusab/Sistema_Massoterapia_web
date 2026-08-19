@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
+
 
 @Service
 public class WhatsAppService {
@@ -25,19 +27,20 @@ public class WhatsAppService {
 
         try {
 
-            String url = UriComponentsBuilder
+            URI uri = UriComponentsBuilder
                     .fromHttpUrl("https://api.callmebot.com/whatsapp.php")
                     .queryParam("phone", numero)
                     .queryParam("text", mensagem)
                     .queryParam("apikey", apiKey)
+                    .build()
                     .encode(StandardCharsets.UTF_8)
-                    .toUriString();
+                    .toUri();
 
             System.out.println("Número utilizado: " + numero);
             System.out.println("API Key carregada: " + (apiKey != null && !apiKey.isBlank()));
 
             String resposta =
-                    restTemplate.getForObject(url, String.class);
+                    restTemplate.getForObject(uri, String.class);
 
             System.out.println("Resposta CallMeBot: " + resposta);
 

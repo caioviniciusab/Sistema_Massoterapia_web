@@ -140,6 +140,28 @@ public class MassoterapeutaController {
 
     }
 
+    @PostMapping("/agenda/cancelar/{id}")
+    public String cancelarAgendamentoAgenda(
+            @PathVariable Integer id,
+            @RequestParam String data,
+            RedirectAttributes attributes,
+            HttpSession session
+    ) {
+
+        if (session.getAttribute("usuarioLogado") == null) {
+            return "redirect:/login";
+        }
+
+        agendamentoService.cancelarAgendamento(id);
+
+        attributes.addFlashAttribute(
+                "sucesso",
+                "Agendamento cancelado com sucesso."
+        );
+
+        return "redirect:/agenda?data=" + data;
+    }
+
     @PostMapping("/login")
     public String autenticar(
             @RequestParam String usuario,

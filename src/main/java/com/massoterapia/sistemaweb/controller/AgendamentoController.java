@@ -72,22 +72,6 @@ public class AgendamentoController {
 
     }
 
-    @PostMapping("/agenda/cancelar/{id}")
-    public String cancelarAgendamentoAgenda(
-            @PathVariable Integer id,
-            @RequestParam String data,
-            RedirectAttributes attributes
-    ) {
-
-        agendamentoService.cancelarAgendamento(id);
-
-        attributes.addFlashAttribute(
-                "sucesso",
-                "Agendamento cancelado com sucesso."
-        );
-
-        return "redirect:/agenda?data=" + data;
-    }
 
 
     @PostMapping("/consultar")
